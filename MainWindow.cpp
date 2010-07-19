@@ -3,7 +3,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent){
     ui.setupUi(this);
-}
+}//
 
 void MainWindow::changeEvent(QEvent *e)
 {
