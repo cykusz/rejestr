@@ -4,15 +4,19 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 TARGET = rejestr
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    core/sql/SqlConnectionObserver.cpp \
+    SqlConnectionController.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    core/sql/SqlConnectionObserver.h \
+    SqlConnectionController.h
 
 FORMS    += MainWindow.ui

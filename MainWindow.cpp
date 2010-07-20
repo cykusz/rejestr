@@ -1,11 +1,14 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent){
+        QMainWindow(parent),
+        SqlConnectionObserver(SqlConnectionController::instance())
+{
     ui.setupUi(this);
-}//
+}
 
-void MainWindow::changeEvent(QEvent *e)
+void
+MainWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
     switch (e->type()) {
@@ -15,4 +18,10 @@ void MainWindow::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void
+MainWindow::sqlConnectionChanged( ConnectionState newConnectionState )
+{
+
 }

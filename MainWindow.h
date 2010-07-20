@@ -3,7 +3,10 @@
 
 #include "ui_MainWindow.h"
 
-class MainWindow : public QMainWindow
+#include "core/sql/SqlConnectionObserver.h"
+#include "SqlConnectionController.h"
+
+class MainWindow : public QMainWindow, public SqlConnectionObserver
 {
     Q_OBJECT
 
@@ -12,6 +15,9 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+
+    // sqlConnectionObserver methods
+    virtual void sqlConnectionChanged(ConnectionState newConnectionState);
 
 private:
     Ui::MainWindow ui;
