@@ -12,12 +12,12 @@ public:
     SqlConnectionObserver( SqlConnectionSubject* );
     ~SqlConnectionObserver();
 
-    enum ConnectionState
+    enum SqlConnectionState
     {
         Connected, Disconnected
     };
 
-    virtual void sqlConnectionChanged( ConnectionState newConnectionState );
+    virtual void sqlConnectionChanged( SqlConnectionState newConnectionState );
 
 private:
     SqlConnectionSubject* m_subject;
@@ -30,7 +30,7 @@ class SqlConnectionSubject : public QObject
     friend class SqlConnectionObserver;
 protected:
 
-    void connectionChangedNotify( SqlConnectionObserver::ConnectionState newConnectionState );
+    void connectionChangedNotify( SqlConnectionObserver::SqlConnectionState newConnectionState );
 
 private:
     void attach( SqlConnectionObserver* );

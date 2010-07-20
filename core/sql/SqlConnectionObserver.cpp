@@ -19,7 +19,7 @@ SqlConnectionObserver::~SqlConnectionObserver()
 }
 
 void
-SqlConnectionObserver::sqlConnectionChanged( ConnectionState newConnectionState )
+SqlConnectionObserver::sqlConnectionChanged( SqlConnectionState newConnectionState )
 {
     Q_UNUSED( newConnectionState );
 }
@@ -34,7 +34,7 @@ SqlConnectionSubject::SqlConnectionSubject( QObject *parent ) : QObject( parent 
 /////////////////////////////////////////////////////////////////////////////////
 
 void
-SqlConnectionSubject::connectionChangedNotify( SqlConnectionObserver::ConnectionState newConnectionState )
+SqlConnectionSubject::connectionChangedNotify( SqlConnectionObserver::SqlConnectionState newConnectionState )
 {
     foreach ( SqlConnectionObserver* observer, m_observers )
         observer->sqlConnectionChanged( newConnectionState );

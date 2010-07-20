@@ -20,3 +20,6 @@ HEADERS  += MainWindow.h \
     SqlConnectionController.h
 
 FORMS    += MainWindow.ui
+
+RESOURCES += \
+    resources.qrc

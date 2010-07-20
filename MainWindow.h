@@ -17,10 +17,13 @@ protected:
     void changeEvent(QEvent *e);
 
     // sqlConnectionObserver methods
-    virtual void sqlConnectionChanged(ConnectionState newConnectionState);
+    void sqlConnectionChanged(SqlConnectionState newConnectionState);
 
 private:
     Ui::MainWindow ui;
+
+private slots:
+    void on_actionConnect_to_a_database_triggered();
 };
 
 #endif // MAINWINDOW_H
