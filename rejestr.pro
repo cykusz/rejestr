@@ -13,11 +13,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         MainWindow.cpp \
     core/sql/SqlConnectionObserver.cpp \
-    SqlConnectionController.cpp
+    SqlConnectionController.cpp \
+    data/DataStructure.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
-    SqlConnectionController.h
+    SqlConnectionController.h \
+    data/DataStructure.h
 
 FORMS    += MainWindow.ui
 

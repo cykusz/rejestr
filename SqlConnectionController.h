@@ -16,7 +16,7 @@ public:
 
     void disconnectFromDatabase();
 
-    inline QSqlDatabase qSqlDb() const
+    static inline QSqlDatabase qSqlDb()
     {
         return QSqlDatabase::database("rejestr",false);
     }

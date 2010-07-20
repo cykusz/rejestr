@@ -1,4 +1,7 @@
 #include "SqlConnectionController.h"
+
+#include "data/DataStructure.h"
+
 #include <QDebug>
 #include <QStringList>
 
@@ -19,19 +22,18 @@ SqlConnectionController* SqlConnectionController::instance()
     return m_instance;
 }
 
-SqlConnectionController::SqlConnectionController(SqlConnectionSubject *parent)
-    : SqlConnectionSubject(parent)
+SqlConnectionController::SqlConnectionController( SqlConnectionSubject *parent )
+    : SqlConnectionSubject( parent )
     , m_connected( false )
-    , m_databaseName("")
+    , m_databaseName( "" )
 
 {
-    QSqlDatabase::addDatabase("QSQLITE","rejestr");
-
+    QSqlDatabase::addDatabase( "QSQLITE","rejestr" );
 }
 
 SqlConnectionController::~SqlConnectionController()
 {
-    QSqlDatabase::removeDatabase("rejestr");
+    QSqlDatabase::removeDatabase( "rejestr" );
 }
 
 void SqlConnectionController::connectToDatabase(const QString &db_name)
@@ -44,6 +46,8 @@ void SqlConnectionController::connectToDatabase(const QString &db_name)
 
         if ( db.open() )
         {
+            DataStructure::initStructure();
+
             m_databaseName = db_name;
 
             m_connected = true;

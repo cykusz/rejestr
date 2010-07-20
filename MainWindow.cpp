@@ -47,7 +47,6 @@ MainWindow::on_actionConnect_to_a_database_triggered()
     if ( ! The::sqlConnectionController()->isConnected() )
     {
 
-
         QFileDialog fileDialog(this);
         fileDialog.setWindowTitle("Select database file");
         fileDialog.setFileMode(QFileDialog::AnyFile);
