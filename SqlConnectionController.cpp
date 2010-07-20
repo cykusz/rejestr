@@ -19,10 +19,11 @@ SqlConnectionController* SqlConnectionController::instance()
     return m_instance;
 }
 
-SqlConnectionController::SqlConnectionController(SqlConnectionSubject *parent) :
-    SqlConnectionSubject(parent)
-    , m_databaseName("")
+SqlConnectionController::SqlConnectionController(SqlConnectionSubject *parent)
+    : SqlConnectionSubject(parent)
     , m_connected( false )
+    , m_databaseName("")
+
 {
     QSqlDatabase::addDatabase("QSQLITE","rejestr");
 
@@ -35,7 +36,7 @@ SqlConnectionController::~SqlConnectionController()
 
 void SqlConnectionController::connectToDatabase(const QString &db_name)
 {
-    QSqlDatabase db = QSqlDatabase::database("rejestr",false);
+    QSqlDatabase db = qSqlDb();
 
     if ( ! db.isOpen() )
     {
@@ -57,7 +58,7 @@ void SqlConnectionController::connectToDatabase(const QString &db_name)
 
 void SqlConnectionController::disconnectFromDatabase()
 {
-    QSqlDatabase db = QSqlDatabase::database("rejestr");
+    QSqlDatabase db = qSqlDb();
 
     if ( db.isOpen() )
     {

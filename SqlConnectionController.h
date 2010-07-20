@@ -16,6 +16,11 @@ public:
 
     void disconnectFromDatabase();
 
+    inline QSqlDatabase qSqlDb() const
+    {
+        return QSqlDatabase::database("rejestr",false);
+    }
+
     inline const QString& databaseName() const
     {
         return m_databaseName;
