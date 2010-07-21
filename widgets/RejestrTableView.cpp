@@ -1,10 +1,16 @@
 #include "RejestrTableView.h"
 
 #include <QMessageBox>
+#include <QHeaderView>
 
 RejestrTableView::RejestrTableView(QWidget *parent) :
     QTableView(parent)
 {
+    setSelectionBehavior(QAbstractItemView::SelectItems);
+    setSelectionMode(QAbstractItemView::ContiguousSelection);
+    horizontalHeader()->setResizeMode(QHeaderView::Interactive);
+    horizontalHeader()->setCascadingSectionResizes(true);
+    horizontalHeader()->setMovable(true);
 }
 
 void RejestrTableView::keyPressEvent(QKeyEvent *event)

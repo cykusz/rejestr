@@ -13,7 +13,7 @@ namespace The {
 }
 
 PoliceStationModel::PoliceStationModel(QObject *parent) :
-    QObject(parent)
+    ModelInterface(parent)
     , m_row_count ( -1 )
 {
 }
@@ -28,9 +28,14 @@ PoliceStationModel::instance()
 }
 
 int
-PoliceStationModel::row_count()
+PoliceStationModel::row_count() const
 {
     return instance()->m_cache.size();
+}
+
+int PoliceStationModel::column_count() const
+{
+    return 2;
 }
 
 void PoliceStationModel::load_cache()
@@ -90,9 +95,20 @@ void PoliceStationModel::removeRow(int i)
 
     QSqlQuery query( SqlConnectionController::qSqlDb() );
 
-    qDebug() << "DELETE FROM jednostki WHERE rowid = " + rowid;
-
     query.exec("DELETE FROM jednostki WHERE rowid = " + rowid );
 
     m_cache.remove(i);
+}
+
+QVariant PoliceStationModel::headerAt(int i) const
+{
+    switch ( i )
+    {
+    case 0:
+        return QString("Miasto");
+    case 1:
+        return QString("Jednostka");
+    default:
+        return QVariant();
+    }
 }

@@ -1,15 +1,16 @@
-#ifndef POLICESTATIONTABLEMODEL_H
-#define POLICESTATIONTABLEMODEL_H
+#ifndef REJESTRTABLEMODEL_H
+#define REJESTRTABLEMODEL_H
 
 #include <QAbstractTableModel>
 
 #include "PoliceStationModel.h"
+#include "model/ModelInterface.h"
 
-class PoliceStationTableModel : public QAbstractTableModel
+class RejestrTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit PoliceStationTableModel(QObject *parent = 0);
+    explicit RejestrTableModel(ModelInterface* model, QObject *parent = 0);
 
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent = QModelIndex() ) const;
@@ -22,10 +23,10 @@ public:
 
     bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
 
-    ~PoliceStationTableModel();
+    ~RejestrTableModel();
 
 private:
-    PoliceStationModel* m_model;
+    ModelInterface* m_model;
 
 signals:
 
@@ -33,4 +34,4 @@ public slots:
 
 };
 
-#endif // POLICESTATIONTABLEMODEL_H
+#endif // REJESTRTABLEMODEL_H

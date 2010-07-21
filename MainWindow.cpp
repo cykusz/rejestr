@@ -5,7 +5,7 @@
 #include <QLabel>
 #include <QTableView>
 
-#include "data/police_station/PoliceStationTableModel.h"
+#include "model/RejestrTableModel.h"
 #include "widgets/RejestrTableView.h"
 #include "TestWidget.h"
 
@@ -38,17 +38,7 @@ MainWindow::sqlConnectionChanged( SqlConnectionState newConnectionState )
 
         ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/disconnect_ico.png" ) );
 
-        RejestrTableView* tv = new RejestrTableView();
-        PoliceStationTableModel* model = new PoliceStationTableModel();
-
-        tv->setModel(model);
-
-        tv->setSelectionBehavior(QAbstractItemView::SelectItems);
-        tv->setSelectionMode(QAbstractItemView::ContiguousSelection);
-
-        setCentralWidget(tv);
-
-        connect(tv, SIGNAL(destroyed()),model,SLOT(deleteLater()));
+        showTableView( The::policeStation() );
 
     }
     else
@@ -87,4 +77,17 @@ MainWindow::on_actionConnect_to_a_database_triggered()
     {
         The::sqlConnectionController()->disconnectFromDatabase();
     }
+}
+
+void MainWindow::showTableView(ModelInterface *model)
+{
+    RejestrTableView* tv = new RejestrTableView();
+
+    RejestrTableModel* tableModel = new RejestrTableModel( model );
+
+    tv->setModel( tableModel );
+
+    setCentralWidget(tv);
+
+    connect(tv, SIGNAL(destroyed()),model,SLOT(deleteLater()));
 }

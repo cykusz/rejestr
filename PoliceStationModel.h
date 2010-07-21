@@ -6,19 +6,23 @@
 #include <QVariant>
 
 #include "SqlConnectionController.h"
+#include "model/ModelInterface.h"
 
-class PoliceStationModel : public QObject
+class PoliceStationModel : public ModelInterface
 {
     Q_OBJECT
 public:
     static PoliceStationModel* instance();
-    static int row_count();
+    int row_count() const;
+    int column_count() const;
 
     void editData(int i, int j, QVariant newValue);
     void removeRow(int i);
 
     void load_cache();
     void clear_cache();
+
+    QVariant headerAt(int i) const;
 
     QVariant valueAt( int i, int j ) const;
 

@@ -1,19 +1,19 @@
-#include "PoliceStationTableModel.h"
+#include "RejestrTableModel.h"
 #include <QDebug>
 
-PoliceStationTableModel::PoliceStationTableModel(QObject *parent) :
+RejestrTableModel::RejestrTableModel(ModelInterface *model, QObject *parent) :
     QAbstractTableModel(parent)
-    , m_model ( The::policeStation() )
+    , m_model ( model )
 {
     m_model->load_cache();
 }
 
-PoliceStationTableModel::~PoliceStationTableModel()
+RejestrTableModel::~RejestrTableModel()
 {
     m_model->clear_cache();
 }
 
-int PoliceStationTableModel::rowCount(const QModelIndex &parent) const
+int RejestrTableModel::rowCount(const QModelIndex &parent) const
 {
     if ( parent.isValid() ) return 0;
     else
@@ -22,16 +22,16 @@ int PoliceStationTableModel::rowCount(const QModelIndex &parent) const
     }
 }
 
-int PoliceStationTableModel::columnCount(const QModelIndex &parent) const
+int RejestrTableModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) return 0;
     else
     {
-        return 2;
+        return m_model->column_count();
     }
 }
 
-QVariant PoliceStationTableModel::data(const QModelIndex &index, int role) const
+QVariant RejestrTableModel::data(const QModelIndex &index, int role) const
 {
     if ( ! index.isValid() )
         return QVariant();
@@ -48,7 +48,7 @@ QVariant PoliceStationTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
 }
 
-QVariant PoliceStationTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant RejestrTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if ( role != Qt::DisplayRole )
     {
@@ -57,19 +57,11 @@ QVariant PoliceStationTableModel::headerData(int section, Qt::Orientation orient
 
     if ( orientation == Qt::Horizontal )
     {
-        switch ( section )
-        {
-        case 0:
-            return QString("Miasto");
-        case 1:
-            return QString("Jednostka");
-        default:
-            return QVariant();
-        }
+        return m_model->headerAt( section );
     } else return QString("%1").arg( m_model->valueAt( section, 0 ).toInt() );
 }
 
-Qt::ItemFlags PoliceStationTableModel::flags(const QModelIndex &index) const
+Qt::ItemFlags RejestrTableModel::flags(const QModelIndex &index) const
 {
     if ( ! index.isValid() )
         return Qt::ItemIsEnabled;
@@ -77,7 +69,7 @@ Qt::ItemFlags PoliceStationTableModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 
-bool PoliceStationTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool RejestrTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.isValid() && role == Qt::EditRole)
     {
@@ -88,7 +80,7 @@ bool PoliceStationTableModel::setData(const QModelIndex &index, const QVariant &
     return false;
 }
 
-bool PoliceStationTableModel::removeRows(int position, int rows, const QModelIndex &index)
+bool RejestrTableModel::removeRows(int position, int rows, const QModelIndex &index)
 {
     if ( rows == 1 )
     {
@@ -96,5 +88,8 @@ bool PoliceStationTableModel::removeRows(int position, int rows, const QModelInd
         beginRemoveRows(QModelIndex(), position, position);
         m_model->removeRow(position);
         endRemoveRows();
+
+        return true;
     }
+    return false;
 }
