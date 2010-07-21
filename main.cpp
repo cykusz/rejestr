@@ -1,6 +1,6 @@
 #include <QtGui/QApplication>
-#include "MainWindow.h"
 
+#include "MainWindow.h"
 #include "SqlConnectionController.h"
 
 int main(int argc, char *argv[])

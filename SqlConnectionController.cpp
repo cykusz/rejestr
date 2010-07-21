@@ -1,9 +1,9 @@
 #include "SqlConnectionController.h"
 
-#include "data/DataStructure.h"
-
 #include <QDebug>
 #include <QStringList>
+
+#include "data/DataStructure.h"
 
 namespace The
 {
@@ -28,7 +28,7 @@ SqlConnectionController::SqlConnectionController( SqlConnectionSubject *parent )
     , m_databaseName( "" )
 
 {
-    QSqlDatabase::addDatabase( "QSQLITE","rejestr" );
+    QSqlDatabase::addDatabase( "QSQLITE" , "rejestr" );
 }
 
 SqlConnectionController::~SqlConnectionController()

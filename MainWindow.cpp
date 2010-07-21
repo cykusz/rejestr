@@ -1,8 +1,12 @@
 #include "MainWindow.h"
 
 #include <QDebug>
-#include <QLabel>
 #include <QFileDialog>
+#include <QLabel>
+#include <QTableView>
+
+#include "data/police_station/PoliceStationTableModel.h"
+#include "TestWidget.h"
 
 MainWindow::MainWindow( QWidget *parent )
     : QMainWindow( parent )
@@ -31,13 +35,25 @@ MainWindow::sqlConnectionChanged( SqlConnectionState newConnectionState )
     {
         ui.actionConnect_to_a_database->setText( "Disconnect from database" );
 
-        ui.actionConnect_to_a_database->setIcon( QIcon(":/icons/disconnect_ico.png") );
+        ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/disconnect_ico.png" ) );
+
+        QTableView* tv = new QTableView();
+        PoliceStationTableModel* model = new PoliceStationTableModel();
+
+        tv->setModel(model);
+
+        setCentralWidget(tv);
+
+        connect(tv, SIGNAL(destroyed()),model,SLOT(deleteLater()));
+
     }
     else
     {
         ui.actionConnect_to_a_database->setText( "Connect to a database" );
 
-        ui.actionConnect_to_a_database->setIcon( QIcon(":/icons/connect_ico.png") );
+        ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/connect_ico.png" ) );
+
+        setCentralWidget(0);
     }
 }
 

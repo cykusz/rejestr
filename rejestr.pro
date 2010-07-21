@@ -14,12 +14,18 @@ SOURCES += main.cpp\
         MainWindow.cpp \
     core/sql/SqlConnectionObserver.cpp \
     SqlConnectionController.cpp \
-    data/DataStructure.cpp
+    data/DataStructure.cpp \
+    data/police_station/PoliceStationTableModel.cpp \
+    PoliceStationModel.cpp \
+    TestWidget.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
     SqlConnectionController.h \
-    data/DataStructure.h
+    data/DataStructure.h \
+    data/police_station/PoliceStationTableModel.h \
+    PoliceStationModel.h \
+    TestWidget.h
 
 FORMS    += MainWindow.ui
 
