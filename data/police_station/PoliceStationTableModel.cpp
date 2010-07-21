@@ -40,7 +40,7 @@ QVariant PoliceStationTableModel::data(const QModelIndex &index, int role) const
         && index.column() < columnCount()
         && index.row() >= 0
         && index.row() < rowCount()
-        && role == Qt::DisplayRole )
+        && ( role == Qt::DisplayRole || role == Qt::EditRole ) )
     {
         return m_model->valueAt( index.row(), index.column() + 1 );
     }
@@ -67,4 +67,23 @@ QVariant PoliceStationTableModel::headerData(int section, Qt::Orientation orient
             return QVariant();
         }
     } else return QString("%1").arg( m_model->valueAt( section, 0 ).toInt() );
+}
+
+Qt::ItemFlags PoliceStationTableModel::flags(const QModelIndex &index) const
+{
+    if ( ! index.isValid() )
+        return Qt::ItemIsEnabled;
+
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+}
+
+bool PoliceStationTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (index.isValid() && role == Qt::EditRole)
+    {
+        m_model->editData(index.row(), index.column()+1, value);
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
 }

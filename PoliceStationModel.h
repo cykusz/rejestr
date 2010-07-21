@@ -14,6 +14,8 @@ public:
     static PoliceStationModel* instance();
     static int row_count();
 
+    void editData(int i, int j, QVariant newValue);
+
     void load_cache();
     void clear_cache();
 
