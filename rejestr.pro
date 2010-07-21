@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     data/DataStructure.cpp \
     data/police_station/PoliceStationTableModel.cpp \
     PoliceStationModel.cpp \
-    TestWidget.cpp
+    TestWidget.cpp \
+    widgets/RejestrTableView.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
@@ -25,7 +26,8 @@ HEADERS  += MainWindow.h \
     data/DataStructure.h \
     data/police_station/PoliceStationTableModel.h \
     PoliceStationModel.h \
-    TestWidget.h
+    TestWidget.h \
+    widgets/RejestrTableView.h
 
 FORMS    += MainWindow.ui
 

@@ -82,5 +82,17 @@ void PoliceStationModel::editData(int i, int j, QVariant newValue)
 
         query.exec("UPDATE jednostki SET " + pole + " = '" + newValue.toString() + "' WHERE rowid = " + rowid );
     }
+}
 
+void PoliceStationModel::removeRow(int i)
+{
+    QString rowid = m_cache[i][0].toString();
+
+    QSqlQuery query( SqlConnectionController::qSqlDb() );
+
+    qDebug() << "DELETE FROM jednostki WHERE rowid = " + rowid;
+
+    query.exec("DELETE FROM jednostki WHERE rowid = " + rowid );
+
+    m_cache.remove(i);
 }

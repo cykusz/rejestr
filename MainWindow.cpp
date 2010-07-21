@@ -6,6 +6,7 @@
 #include <QTableView>
 
 #include "data/police_station/PoliceStationTableModel.h"
+#include "widgets/RejestrTableView.h"
 #include "TestWidget.h"
 
 MainWindow::MainWindow( QWidget *parent )
@@ -37,10 +38,13 @@ MainWindow::sqlConnectionChanged( SqlConnectionState newConnectionState )
 
         ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/disconnect_ico.png" ) );
 
-        QTableView* tv = new QTableView();
+        RejestrTableView* tv = new RejestrTableView();
         PoliceStationTableModel* model = new PoliceStationTableModel();
 
         tv->setModel(model);
+
+        tv->setSelectionBehavior(QAbstractItemView::SelectItems);
+        tv->setSelectionMode(QAbstractItemView::ContiguousSelection);
 
         setCentralWidget(tv);
 

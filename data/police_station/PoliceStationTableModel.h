@@ -20,6 +20,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole);
 
+    bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
+
     ~PoliceStationTableModel();
 
 private:

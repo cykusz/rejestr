@@ -87,3 +87,14 @@ bool PoliceStationTableModel::setData(const QModelIndex &index, const QVariant &
     }
     return false;
 }
+
+bool PoliceStationTableModel::removeRows(int position, int rows, const QModelIndex &index)
+{
+    if ( rows == 1 )
+    {
+        qDebug() << "remove at" << position;
+        beginRemoveRows(QModelIndex(), position, position);
+        m_model->removeRow(position);
+        endRemoveRows();
+    }
+}

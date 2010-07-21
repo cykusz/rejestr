@@ -15,6 +15,7 @@ public:
     static int row_count();
 
     void editData(int i, int j, QVariant newValue);
+    void removeRow(int i);
 
     void load_cache();
     void clear_cache();
