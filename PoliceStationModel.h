@@ -16,7 +16,7 @@ public:
     int row_count() const;
     int column_count() const;
 
-    void editData(int i, int j, QVariant newValue);
+    bool editData(int i, int j, QVariant newValue);
     void removeRow(int i);
 
     void load_cache();
@@ -30,6 +30,8 @@ public:
 
     QStringList* uniqueList(int i) const;
 
+    QAbstractItemDelegate* itemDelegate() const;
+
     ~PoliceStationModel();
 
 private:
@@ -38,6 +40,10 @@ private:
     int m_row_count;
 
     QVector< QVector<QVariant> > m_cache;
+    QVector<QVariant> m_addRow;
+    QVector< QStringList* > m_uniqueLists;
+
+    void updateUniqueLists();
 
     static PoliceStationModel* m_instance;
 };

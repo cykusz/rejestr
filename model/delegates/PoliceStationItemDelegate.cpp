@@ -13,8 +13,10 @@ PoliceStationItemDelegate::PoliceStationItemDelegate(PoliceStationModel *model, 
 QWidget *PoliceStationItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QLineEdit* editor = new QLineEdit(parent);
+    editor->setFrame(false);
 
     QCompleter* completer = new QCompleter( *m_policeModel->uniqueList( index.column() ),parent );
+    completer->setCompletionMode( QCompleter::PopupCompletion );
     completer->setCaseSensitivity(Qt::CaseInsensitive);
 
     editor->setCompleter(completer);
@@ -36,4 +38,9 @@ void PoliceStationItemDelegate::setModelData(QWidget *editor, QAbstractItemModel
     QString value = lineEdit->text();
 
     model->setData(index,value, Qt::EditRole);
+}
+
+void PoliceStationItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    editor->setGeometry(option.rect);
 }

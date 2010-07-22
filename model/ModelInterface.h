@@ -2,6 +2,7 @@
 #define MODELINTERFACE_H
 
 #include <QObject>
+#include <QAbstractItemDelegate>
 
 class ModelInterface : public QObject
 {
@@ -12,7 +13,7 @@ public:
     virtual int row_count() const = 0;
     virtual int column_count() const = 0;
 
-    virtual void editData(int i, int j, QVariant newValue) = 0;
+    virtual bool editData(int i, int j, QVariant newValue) = 0;
     virtual void removeRow(int i) = 0;
 
     virtual void load_cache() = 0;
@@ -24,6 +25,7 @@ public:
 
     virtual QVariant valueAt( int i, int j ) const = 0;
 
+    virtual QAbstractItemDelegate* itemDelegate() const = 0;
 };
 
 #endif // MODELINTERFACE_H

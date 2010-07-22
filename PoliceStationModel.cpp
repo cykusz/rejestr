@@ -1,6 +1,8 @@
 #include "PoliceStationModel.h"
+#include "model/delegates/PoliceStationItemDelegate.h"
 
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QDebug>
 #include <QStringList>
 
@@ -48,6 +50,9 @@ void PoliceStationModel::load_cache()
 {
     m_cache.clear();
     m_cache.resize(3);
+    m_addRow.clear();
+    m_addRow.resize(3);
+    m_addRow[0] = "+";
 
     QSqlQuery query( SqlConnectionController::qSqlDb() );
 
@@ -66,6 +71,8 @@ void PoliceStationModel::load_cache()
         m_cache[1].append(rob[1]);
         m_cache[2].append(rob[2]);
     }
+
+    updateUniqueLists();
 }
 
 void PoliceStationModel::clear_cache()
@@ -79,13 +86,17 @@ QVariant PoliceStationModel::valueAt(int i, int j) const
     {
         return m_cache[j][i];
     }
+    else if ( i == m_cache[0].size() )
+    {
+        return m_addRow[j];
+    }
     else
         return QVariant();
 }
 
-void PoliceStationModel::editData(int i, int j, QVariant newValue)
+bool PoliceStationModel::editData(int i, int j, QVariant newValue)
 {
-    if ( i >= 0 && i < m_cache.size() )
+    if ( i >= 0 && i < m_cache[0].size() )
     {
         QString pole = "";
         if ( j == 1 )
@@ -103,8 +114,39 @@ void PoliceStationModel::editData(int i, int j, QVariant newValue)
 
         query.exec("UPDATE jednostki SET " + pole + " = '" + newValue.toString() + "' WHERE rowid = " + rowid );
 
+        updateUniqueLists();
+    } else if ( i == m_cache[0].size() )
+    {
+        if ( j > 0 )
+        {
+            m_addRow[j] = newValue;
 
+            if ( m_addRow[1].isValid() && m_addRow[2].isValid() )
+            {
+                QString miasto = m_addRow[1].toString();
+                QString jednostka = m_addRow[2].toString();
+
+                QSqlQuery query( SqlConnectionController::qSqlDb() );
+
+                query.exec("INSERT INTO jednostki VALUES('"+miasto+"','"+jednostka+"')");
+
+                QVariant insertId = query.lastInsertId();
+
+                m_cache[0].append(insertId);
+                m_cache[1].append(m_addRow[1]);
+                m_cache[2].append(m_addRow[2]);
+
+                m_addRow[1] = QVariant();
+                m_addRow[2] = QVariant();
+
+                updateUniqueLists();
+
+                return true;
+            }
+        }
     }
+
+    return false;
 }
 
 void PoliceStationModel::removeRow(int i)
@@ -114,6 +156,8 @@ void PoliceStationModel::removeRow(int i)
     QSqlQuery query( SqlConnectionController::qSqlDb() );
 
     query.exec("DELETE FROM jednostki WHERE rowid = " + rowid );
+
+    updateUniqueLists();
 
     m_cache[0].remove(i);
     m_cache[1].remove(i);
@@ -141,12 +185,29 @@ bool PoliceStationModel::isColumnEditable(int i) const
     else return true;
 }
 
+void PoliceStationModel::updateUniqueLists()
+{
+    m_uniqueLists.clear();
+    m_uniqueLists.resize(2);
+    QSet<QString> set;
+    for (int i = 1; i < 3; ++i)
+    {
+        set.clear();
+        foreach (QVariant str, m_cache[i])
+        {
+            set.insert(str.toString());
+        }
+        m_uniqueLists[i-1] = new QStringList(set.toList());
+    }
+
+}
+
 QStringList* PoliceStationModel::uniqueList(int i) const
 {
-    QSet<QString> set;
-    foreach (QVariant city, m_cache[i])
-    {
-        set.insert(city.toString());
-    }
-    return new QStringList(set.toList());
+    return m_uniqueLists[i-1];
+}
+
+QAbstractItemDelegate* PoliceStationModel::itemDelegate() const
+{
+    return new PoliceStationItemDelegate( m_instance );
 }

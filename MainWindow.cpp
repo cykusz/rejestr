@@ -86,9 +86,7 @@ void MainWindow::showTableView(ModelInterface *model)
 
     RejestrTableModel* tableModel = new RejestrTableModel( model );
 
-    PoliceStationItemDelegate *id = new PoliceStationItemDelegate(static_cast<PoliceStationModel*>(model));
-
-    tv->setItemDelegate(id);
+    tv->setItemDelegate( model->itemDelegate() );
 
     tv->setModel( tableModel );
 
