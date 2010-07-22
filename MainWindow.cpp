@@ -6,6 +6,7 @@
 #include <QTableView>
 
 #include "model/RejestrTableModel.h"
+#include "model/delegates/PoliceStationItemDelegate.h"
 #include "widgets/RejestrTableView.h"
 #include "TestWidget.h"
 
@@ -84,6 +85,10 @@ void MainWindow::showTableView(ModelInterface *model)
     RejestrTableView* tv = new RejestrTableView();
 
     RejestrTableModel* tableModel = new RejestrTableModel( model );
+
+    PoliceStationItemDelegate *id = new PoliceStationItemDelegate(static_cast<PoliceStationModel*>(model));
+
+    tv->setItemDelegate(id);
 
     tv->setModel( tableModel );
 

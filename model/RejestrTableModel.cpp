@@ -42,7 +42,7 @@ QVariant RejestrTableModel::data(const QModelIndex &index, int role) const
         && index.row() < rowCount()
         && ( role == Qt::DisplayRole || role == Qt::EditRole ) )
     {
-        return m_model->valueAt( index.row(), index.column() + 1 );
+        return m_model->valueAt( index.row(), index.column() );
     }
     else
         return QVariant();
@@ -58,7 +58,7 @@ QVariant RejestrTableModel::headerData(int section, Qt::Orientation orientation,
     if ( orientation == Qt::Horizontal )
     {
         return m_model->headerAt( section );
-    } else return QString("%1").arg( m_model->valueAt( section, 0 ).toInt() );
+    } else return QString("%1").arg( section );
 }
 
 Qt::ItemFlags RejestrTableModel::flags(const QModelIndex &index) const
@@ -66,6 +66,7 @@ Qt::ItemFlags RejestrTableModel::flags(const QModelIndex &index) const
     if ( ! index.isValid() )
         return Qt::ItemIsEnabled;
 
+    if ( ! m_model->isColumnEditable( index.column() ) ) return QAbstractItemModel::flags(index);
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 
@@ -73,7 +74,7 @@ bool RejestrTableModel::setData(const QModelIndex &index, const QVariant &value,
 {
     if (index.isValid() && role == Qt::EditRole)
     {
-        m_model->editData(index.row(), index.column()+1, value);
+        m_model->editData(index.row(), index.column(), value);
         emit dataChanged(index, index);
         return true;
     }
@@ -84,7 +85,6 @@ bool RejestrTableModel::removeRows(int position, int rows, const QModelIndex &in
 {
     if ( rows == 1 )
     {
-        qDebug() << "remove at" << position;
         beginRemoveRows(QModelIndex(), position, position);
         m_model->removeRow(position);
         endRemoveRows();

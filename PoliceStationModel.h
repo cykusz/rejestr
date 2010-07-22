@@ -22,9 +22,15 @@ public:
     void load_cache();
     void clear_cache();
 
+    bool isColumnEditable(int i) const;
+
     QVariant headerAt(int i) const;
 
     QVariant valueAt( int i, int j ) const;
+
+    QStringList* uniqueList(int i) const;
+
+    ~PoliceStationModel();
 
 private:
     explicit PoliceStationModel(QObject *parent = 0);

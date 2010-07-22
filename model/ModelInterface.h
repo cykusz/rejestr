@@ -7,7 +7,7 @@ class ModelInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit ModelInterface(QObject *parent = 0);
+    ModelInterface(QObject *parent = 0);
 
     virtual int row_count() const = 0;
     virtual int column_count() const = 0;
@@ -17,6 +17,8 @@ public:
 
     virtual void load_cache() = 0;
     virtual void clear_cache() = 0;
+
+    virtual bool isColumnEditable(int i) const = 0;
 
     virtual QVariant headerAt(int i) const = 0;
 

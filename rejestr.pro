@@ -18,8 +18,9 @@ SOURCES += main.cpp\
     PoliceStationModel.cpp \
     TestWidget.cpp \
     widgets/RejestrTableView.cpp \
+    model/RejestrTableModel.cpp \
     model/ModelInterface.cpp \
-    model/RejestrTableModel.cpp
+    model/delegates/PoliceStationItemDelegate.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
@@ -29,7 +30,8 @@ HEADERS  += MainWindow.h \
     TestWidget.h \
     widgets/RejestrTableView.h \
     model/ModelInterface.h \
-    model/RejestrTableModel.h
+    model/RejestrTableModel.h \
+    model/delegates/PoliceStationItemDelegate.h
 
 FORMS    += MainWindow.ui
 
