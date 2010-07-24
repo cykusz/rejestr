@@ -94,9 +94,6 @@ bool RejestrTableModel::removeRows(int position, int rows, const QModelIndex &in
         m_model->removeRow(position);
         endRemoveRows();
 
-        beginInsertRows(QModelIndex(),0,0);
-        endInsertRows();
-
         return true;
     }
     return false;

@@ -16,10 +16,9 @@ namespace The {
 }
 
 PoliceStationModel::PoliceStationModel(QObject *parent) :
-    ModelInterface(parent)
-    , m_row_count ( -1 )
+    AbstractModel(parent)
 {
-    qDebug() << "created";
+    m_cache_size = 3;
     load_cache();
 }
 
@@ -35,19 +34,11 @@ PoliceStationModel::instance()
 PoliceStationModel::~PoliceStationModel()
 {
     m_instance = 0;
-    qDebug() << "deleted";
 
     foreach (QStringList *item, m_uniqueLists)
     {
         delete item;
     }
-}
-
-int
-PoliceStationModel::row_count() const
-{
-    return m_cache[0].size();
-
 }
 
 int PoliceStationModel::column_count() const
@@ -58,9 +49,9 @@ int PoliceStationModel::column_count() const
 void PoliceStationModel::load_cache()
 {
     m_cache.clear();
-    m_cache.resize(3);
+    m_cache.resize( m_cache_size );
     m_addRow.clear();
-    m_addRow.resize(3);
+    m_addRow.resize( m_cache_size );
     m_addRow[0] = "+";
 
     QSqlQuery query( SqlConnectionController::qSqlDb() );
@@ -68,39 +59,14 @@ void PoliceStationModel::load_cache()
     query.exec( "SELECT rowid, miasto, jednostka FROM jednostki ORDER BY rowid" );
 
     while ( query.next() )
-    {
-        QVector<QVariant> rob;
-
-        rob.resize(3);
-        rob[0] = query.value(0);
-        rob[1] = query.value(1);
-        rob[2] = query.value(2);
-
-        m_cache[0].append(rob[0]);
-        m_cache[1].append(rob[1]);
-        m_cache[2].append(rob[2]);
+    {        
+        for ( int i = 0; i < m_cache_size; ++i )
+        {
+            m_cache[i].append(query.value(i));
+        }
     }
 
     updateUniqueLists();
-}
-
-void PoliceStationModel::clear_cache()
-{
-    m_cache.clear();
-}
-
-QVariant PoliceStationModel::valueAt(int i, int j) const
-{
-    if ( i >= 0 && i < m_cache[0].size() )
-    {
-        return m_cache[j][i];
-    }
-    else if ( i == m_cache[0].size() )
-    {
-        return m_addRow[j];
-    }
-    else
-        return QVariant();
 }
 
 bool PoliceStationModel::editData(int i, int j, QVariant newValue)
@@ -168,9 +134,10 @@ void PoliceStationModel::removeRow(int i)
 
     updateUniqueLists();
 
-    m_cache[0].remove(i);
-    m_cache[1].remove(i);
-    m_cache[2].remove(i);
+    for ( int j = 0; j < m_cache_size; ++j )
+    {
+        m_cache[j].remove(i);
+    }
 }
 
 QVariant PoliceStationModel::headerAt(int i) const
@@ -196,7 +163,6 @@ bool PoliceStationModel::isColumnEditable(int i) const
 
 void PoliceStationModel::updateUniqueLists()
 {
-    qDebug() << "unique list";
     m_uniqueLists.clear();
     m_uniqueLists.resize(2);
     QSet<QString> set;
@@ -214,7 +180,6 @@ void PoliceStationModel::updateUniqueLists()
 
 QStringList* PoliceStationModel::uniqueList(int i) const
 {
-    qDebug() <<"usize" << m_uniqueLists.size();
     return m_uniqueLists[i-1];
 }
 
