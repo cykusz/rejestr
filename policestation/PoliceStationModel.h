@@ -22,7 +22,7 @@ public:
 
     QVariant headerAt(int i) const;
 
-    QAbstractItemDelegate* itemDelegate() const;
+    QAbstractItemDelegate* itemDelegate(QObject* parent = 0) const;
 
     QStringList* uniqueList(int i) const;
 

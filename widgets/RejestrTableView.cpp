@@ -2,6 +2,7 @@
 
 #include <QMessageBox>
 #include <QHeaderView>
+#include <QDebug>
 
 RejestrTableView::RejestrTableView(QWidget *parent) :
     QTableView(parent)
@@ -11,6 +12,11 @@ RejestrTableView::RejestrTableView(QWidget *parent) :
     horizontalHeader()->setResizeMode(QHeaderView::Interactive);
     horizontalHeader()->setCascadingSectionResizes(true);
     horizontalHeader()->setMovable(true);
+}
+
+RejestrTableView::~RejestrTableView()
+{
+    qDebug() << "delete table view";
 }
 
 void RejestrTableView::keyPressEvent(QKeyEvent *event)

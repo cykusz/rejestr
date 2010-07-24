@@ -25,6 +25,8 @@ StaffModel* StaffModel::instance()
 
 StaffModel::~StaffModel()
 {
+    clear_cache();
+
     m_instance = 0;
 }
 
@@ -185,7 +187,7 @@ bool StaffModel::isColumnEditable(int i) const
     else return true;
 }
 
-QAbstractItemDelegate* StaffModel::itemDelegate() const
+QAbstractItemDelegate* StaffModel::itemDelegate(QObject* parent) const
 {
-    return new StaffItemDelegate();
+    return new StaffItemDelegate( parent );
 }

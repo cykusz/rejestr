@@ -22,7 +22,7 @@ public:
 
     virtual QStringList* uniqueList(int i) const;
 
-    virtual QAbstractItemDelegate* itemDelegate() const;
+    virtual QAbstractItemDelegate* itemDelegate(QObject* parent = 0) const;
 
 public slots:
     virtual void load_cache();

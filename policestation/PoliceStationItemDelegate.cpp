@@ -10,6 +10,10 @@ PoliceStationItemDelegate::PoliceStationItemDelegate(PoliceStationModel *model, 
 {
 }
 
+PoliceStationItemDelegate::~PoliceStationItemDelegate()
+{
+}
+
 QWidget *PoliceStationItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QLineEdit* editor = new QLineEdit(parent);

@@ -14,6 +14,7 @@ StaffItemDelegate::StaffItemDelegate(QObject *parent) :
 
 void StaffItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+
     if (index.column() > 3)
     {
         QStyleOptionButton checkboxstyle;
@@ -38,7 +39,7 @@ void StaffItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
     }
 }
 
-QWidget *StaffItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *StaffItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &/*option*/, const QModelIndex &index) const
 {
     QWidget* editor = NULL;
     if (index.column() > 3)
@@ -97,7 +98,6 @@ void StaffItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOption
         QStyleOptionButton checkboxstyle;
         QRect checkbox_rect = QApplication::style()->subElementRect(QStyle::SE_CheckBoxIndicator, &checkboxstyle);
         QRect r = option.rect;
-        qDebug() << r;
 
         r.setLeft(r.x() +
                   r.width()/2 - checkbox_rect.width()/2);

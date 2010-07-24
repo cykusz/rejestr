@@ -35,6 +35,10 @@ PoliceStationModel::~PoliceStationModel()
 {
     m_instance = 0;
 
+    clear_cache();
+
+    qDebug() << "delete policeStation";
+
     foreach (QStringList *item, m_uniqueLists)
     {
         delete item;
@@ -178,7 +182,7 @@ QStringList* PoliceStationModel::uniqueList(int i) const
     return m_uniqueLists[i-1];
 }
 
-QAbstractItemDelegate* PoliceStationModel::itemDelegate() const
+QAbstractItemDelegate* PoliceStationModel::itemDelegate(QObject* parent) const
 {
-    return new PoliceStationItemDelegate( m_instance );
+    return new PoliceStationItemDelegate( m_instance, parent );
 }

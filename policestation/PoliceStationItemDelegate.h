@@ -10,6 +10,7 @@ class PoliceStationItemDelegate : public QItemDelegate
     Q_OBJECT
 public:
     explicit PoliceStationItemDelegate(PoliceStationModel* model, QObject *parent = 0);
+    ~PoliceStationItemDelegate();
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                                const QModelIndex &index) const;

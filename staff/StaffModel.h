@@ -22,7 +22,7 @@ public:
 
     bool isColumnEditable(int i) const;
 
-    QAbstractItemDelegate* itemDelegate() const;
+    QAbstractItemDelegate* itemDelegate(QObject* parent = 0) const;
 
     QVariant headerAt(int i) const;
 

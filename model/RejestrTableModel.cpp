@@ -10,7 +10,8 @@ RejestrTableModel::RejestrTableModel(ModelInterface *model, QObject *parent) :
 
 RejestrTableModel::~RejestrTableModel()
 {
-    m_model->clear_cache();
+    qDebug() << "delete table model";
+    //m_model->clear_cache();
 }
 
 int RejestrTableModel::rowCount(const QModelIndex &parent) const

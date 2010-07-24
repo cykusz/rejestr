@@ -25,7 +25,7 @@ public:
 
     virtual QVariant valueAt( int i, int j ) const = 0;
 
-    virtual QAbstractItemDelegate* itemDelegate() const = 0;
+    virtual QAbstractItemDelegate* itemDelegate(QObject* parent = 0) const = 0;
 };
 
 #endif // MODELINTERFACE_H

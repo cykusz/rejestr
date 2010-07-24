@@ -98,9 +98,9 @@ void MainWindow::showTableView(ModelInterface *model)
 
     model->setParent(tv);
 
-    RejestrTableModel* tableModel = new RejestrTableModel( model );
+    RejestrTableModel* tableModel = new RejestrTableModel( model, tv );
 
-    tv->setItemDelegate( model->itemDelegate() );
+    tv->setItemDelegate( model->itemDelegate( tv ) );
 
     tv->setModel( tableModel );
 

@@ -34,7 +34,7 @@
    </widget>
    <widget class="QMenu" name="menuDatabase">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="title">
      <string>Database</string>

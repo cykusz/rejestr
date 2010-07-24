@@ -10,6 +10,7 @@ class RejestrTableView : public QTableView
     Q_OBJECT
 public:
     explicit RejestrTableView(QWidget *parent = 0);
+    ~RejestrTableView();
 
     void keyPressEvent(QKeyEvent *event);
 

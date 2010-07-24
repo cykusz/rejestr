@@ -25,8 +25,6 @@ protected:
 private:
     Ui::MainWindow ui;
 
-    QMap<QString, QAction*> m_actionMap;
-
     void showTableView(ModelInterface* model);
 
 private slots:

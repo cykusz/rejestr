@@ -65,9 +65,9 @@ QStringList* AbstractModel::uniqueList(int i) const
     return NULL;
 }
 
-QAbstractItemDelegate* AbstractModel::itemDelegate() const
+QAbstractItemDelegate* AbstractModel::itemDelegate(QObject* parent) const
 {
-    return new QItemDelegate();
+    return new QItemDelegate(parent);
 }
 
 bool AbstractModel::isColumnEditable(int i) const
