@@ -40,6 +40,7 @@
      <string>Database</string>
     </property>
     <addaction name="actionStations"/>
+    <addaction name="actionStaff"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDatabase"/>
@@ -52,7 +53,9 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionConnect_to_a_database"/>
+   <addaction name="separator"/>
    <addaction name="actionStations"/>
+   <addaction name="actionStaff"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionConnect_to_a_database">
@@ -74,6 +77,18 @@
    </property>
    <property name="text">
     <string>Stations</string>
+   </property>
+  </action>
+  <action name="actionStaff">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/staff_ico.png</normaloff>:/icons/staff_ico.png</iconset>
+   </property>
+   <property name="text">
+    <string>Staff</string>
    </property>
   </action>
  </widget>

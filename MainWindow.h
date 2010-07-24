@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QMap>
+
 #include "ui_MainWindow.h"
 
 #include "core/sql/SqlConnectionObserver.h"
@@ -23,11 +25,15 @@ protected:
 private:
     Ui::MainWindow ui;
 
+    QMap<QString, QAction*> m_actionMap;
+
     void showTableView(ModelInterface* model);
 
 private slots:
+    void on_actionStaff_triggered();
     void on_actionStations_triggered();
     void on_actionConnect_to_a_database_triggered();
+
 };
 
 #endif // MAINWINDOW_H

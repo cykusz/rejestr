@@ -41,11 +41,6 @@ PoliceStationModel::~PoliceStationModel()
     }
 }
 
-int PoliceStationModel::column_count() const
-{
-    return 3;
-}
-
 void PoliceStationModel::load_cache()
 {
     m_cache.clear();

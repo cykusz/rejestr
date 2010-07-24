@@ -7,6 +7,7 @@
 
 #include "model/RejestrTableModel.h"
 #include "policestation/PoliceStationItemDelegate.h"
+#include "staff/StaffModel.h"
 #include "widgets/RejestrTableView.h"
 
 MainWindow::MainWindow( QWidget *parent )
@@ -39,7 +40,11 @@ MainWindow::sqlConnectionChanged( SqlConnectionState newConnectionState )
         ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/disconnect_ico.png" ) );
 
         ui.menuDatabase->setEnabled(true);
-        ui.actionStations->setEnabled(true);
+
+        foreach (QAction *action, ui.menuDatabase->actions())
+        {
+            action->setEnabled(true);
+        }
 
     }
     else
@@ -49,7 +54,11 @@ MainWindow::sqlConnectionChanged( SqlConnectionState newConnectionState )
         ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/connect_ico.png" ) );
 
         ui.menuDatabase->setEnabled(false);
-        ui.actionStations->setEnabled(false);
+
+        foreach (QAction *action, ui.menuDatabase->actions())
+        {
+            action->setEnabled(false);
+        }
 
         setCentralWidget(0);
     }
@@ -101,4 +110,9 @@ void MainWindow::showTableView(ModelInterface *model)
 void MainWindow::on_actionStations_triggered()
 {
     showTableView( The::policeStation() );
+}
+
+void MainWindow::on_actionStaff_triggered()
+{
+    showTableView( The::staff() );
 }

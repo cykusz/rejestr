@@ -14,7 +14,6 @@ class PoliceStationModel : public AbstractModel
 public:
     explicit PoliceStationModel(QObject *parent = 0);
     static PoliceStationModel* instance();
-    int column_count() const;
 
     bool editData(int i, int j, QVariant newValue);
     void removeRow(int i);
