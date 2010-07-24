@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 
-#include "PoliceStationModel.h"
+#include "policestation/PoliceStationModel.h"
 #include "model/ModelInterface.h"
 
 class RejestrTableModel : public QAbstractTableModel

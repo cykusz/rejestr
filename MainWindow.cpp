@@ -6,9 +6,8 @@
 #include <QTableView>
 
 #include "model/RejestrTableModel.h"
-#include "model/delegates/PoliceStationItemDelegate.h"
+#include "policestation/PoliceStationItemDelegate.h"
 #include "widgets/RejestrTableView.h"
-#include "TestWidget.h"
 
 MainWindow::MainWindow( QWidget *parent )
     : QMainWindow( parent )
@@ -39,7 +38,8 @@ MainWindow::sqlConnectionChanged( SqlConnectionState newConnectionState )
 
         ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/disconnect_ico.png" ) );
 
-        showTableView( The::policeStation() );
+        ui.menuDatabase->setEnabled(true);
+        ui.actionStations->setEnabled(true);
 
     }
     else
@@ -47,6 +47,9 @@ MainWindow::sqlConnectionChanged( SqlConnectionState newConnectionState )
         ui.actionConnect_to_a_database->setText( "Connect to a database" );
 
         ui.actionConnect_to_a_database->setIcon( QIcon( ":/icons/connect_ico.png" ) );
+
+        ui.menuDatabase->setEnabled(false);
+        ui.actionStations->setEnabled(false);
 
         setCentralWidget(0);
     }
@@ -84,6 +87,8 @@ void MainWindow::showTableView(ModelInterface *model)
 {
     RejestrTableView* tv = new RejestrTableView();
 
+    model->setParent(tv);
+
     RejestrTableModel* tableModel = new RejestrTableModel( model );
 
     tv->setItemDelegate( model->itemDelegate() );
@@ -91,6 +96,9 @@ void MainWindow::showTableView(ModelInterface *model)
     tv->setModel( tableModel );
 
     setCentralWidget(tv);
+}
 
-    connect(tv, SIGNAL(destroyed()),model,SLOT(deleteLater()));
+void MainWindow::on_actionStations_triggered()
+{
+    showTableView( The::policeStation() );
 }

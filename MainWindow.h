@@ -26,6 +26,7 @@ private:
     void showTableView(ModelInterface* model);
 
 private slots:
+    void on_actionStations_triggered();
     void on_actionConnect_to_a_database_triggered();
 };
 

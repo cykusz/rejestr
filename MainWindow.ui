@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,7 +32,17 @@
     </property>
     <addaction name="actionConnect_to_a_database"/>
    </widget>
+   <widget class="QMenu" name="menuDatabase">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>Database</string>
+    </property>
+    <addaction name="actionStations"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuDatabase"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -39,6 +52,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionConnect_to_a_database"/>
+   <addaction name="actionStations"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionConnect_to_a_database">
@@ -48,6 +62,18 @@
    </property>
    <property name="text">
     <string>Connect to a database</string>
+   </property>
+  </action>
+  <action name="actionStations">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/Hangar-32.png</normaloff>:/icons/Hangar-32.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stations</string>
    </property>
   </action>
  </widget>

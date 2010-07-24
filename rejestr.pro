@@ -15,23 +15,21 @@ SOURCES += main.cpp\
     core/sql/SqlConnectionObserver.cpp \
     SqlConnectionController.cpp \
     data/DataStructure.cpp \
-    PoliceStationModel.cpp \
-    TestWidget.cpp \
     widgets/RejestrTableView.cpp \
     model/RejestrTableModel.cpp \
     model/ModelInterface.cpp \
-    model/delegates/PoliceStationItemDelegate.cpp
+    policestation/PoliceStationItemDelegate.cpp \
+    policestation/PoliceStationModel.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
     SqlConnectionController.h \
     data/DataStructure.h \
-    PoliceStationModel.h \
-    TestWidget.h \
     widgets/RejestrTableView.h \
     model/ModelInterface.h \
     model/RejestrTableModel.h \
-    model/delegates/PoliceStationItemDelegate.h
+    policestation/PoliceStationItemDelegate.h \
+    policestation/PoliceStationModel.h
 
 FORMS    += MainWindow.ui
 
