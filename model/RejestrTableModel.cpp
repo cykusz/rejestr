@@ -2,7 +2,7 @@
 #include <QDebug>
 
 RejestrTableModel::RejestrTableModel(ModelInterface *model, QObject *parent) :
-    QAbstractTableModel(parent)
+    QAbstractTableModel(parent), ModelObserver( model )
     , m_model ( model )
 {
     m_model->load_cache();
@@ -76,26 +76,41 @@ bool RejestrTableModel::setData(const QModelIndex &index, const QVariant &value,
 
     if (index.isValid() && role == Qt::EditRole)
     {
-        if ( m_model->editData(index.row(), index.column(), value) )
-        {
-            beginInsertRows(QModelIndex(),0,0);
-            endInsertRows();
-        }
+        m_model->editData(index.row(), index.column(), value);
+
         emit dataChanged(index, index);
         return true;
     }
     return false;
 }
 
+void RejestrTableModel::modelRowsInsertBegan(int posStart, int posEnd)
+{
+    beginInsertRows(QModelIndex(), posStart, posEnd);
+}
+
+void RejestrTableModel::modelRowsInsertFinished()
+{
+    endInsertRows();
+}
+
 bool RejestrTableModel::removeRows(int position, int rows, const QModelIndex &index)
 {
     if ( ( rows == 1 ) && ( position != m_model->row_count() ) )
     {
-        beginRemoveRows(QModelIndex(), position, position);
         m_model->removeRow(position);
-        endRemoveRows();
 
         return true;
     }
     return false;
+}
+
+void RejestrTableModel::modelRowsDeleteBegan(int posStart, int posEnd)
+{
+    beginRemoveRows(QModelIndex(), posStart, posEnd);
+}
+
+void RejestrTableModel::modelRowsDeleteFinished()
+{
+     endRemoveRows();
 }

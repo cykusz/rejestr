@@ -1,7 +1,6 @@
 #ifndef POLICESTATIONMODEL_H
 #define POLICESTATIONMODEL_H
 
-#include <QObject>
 #include <QVector>
 #include <QVariant>
 

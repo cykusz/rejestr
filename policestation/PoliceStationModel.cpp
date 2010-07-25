@@ -106,12 +106,16 @@ bool PoliceStationModel::editData(int i, int j, QVariant newValue)
 
                 QVariant insertId = query.lastInsertId();
 
+                rowsInsertBeganNotify(m_cache[0].size(),m_cache[0].size());
+
                 m_cache[0].append(insertId);
                 m_cache[1].append(m_addRow[1]);
                 m_cache[2].append(m_addRow[2]);
 
                 m_addRow[1] = QVariant();
                 m_addRow[2] = QVariant();
+
+                rowsInsertFinishedNotify();
 
                 updateUniqueLists();
 
@@ -133,10 +137,14 @@ void PoliceStationModel::removeRow(int i)
 
     updateUniqueLists();
 
+    rowsDeleteBeganNotify(i,i);
+
     for ( int j = 0; j < m_cache_size; ++j )
     {
         m_cache[j].remove(i);
     }
+
+    rowsDeleteFinishedNotify();
 }
 
 QVariant PoliceStationModel::headerAt(int i) const

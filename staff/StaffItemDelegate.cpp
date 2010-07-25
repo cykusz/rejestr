@@ -20,6 +20,7 @@ void StaffItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         painter->save();
 
         painter->setClipRect(option.rect);
+
         if (option.state & QStyle::State_Selected)
             painter->fillRect(option.rect, option.palette.highlight());
 
@@ -37,8 +38,10 @@ void StaffItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         {
             checkboxstyle.state = QStyle::State_Off | QStyle::State_Enabled;
         }
+
         if (option.state & QStyle::State_Selected)
             painter->fillRect(option.rect, option.palette.highlight());
+
         QApplication::style()->drawControl(QStyle::CE_CheckBox,
                                             &checkboxstyle, painter);
 
@@ -113,8 +116,6 @@ void StaffItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOption
         r.setLeft(r.x() +
                   r.width()/2 - checkbox_rect.width()/2);
         editor->setGeometry(r);
-        if (index.column()==4 && index.row()==0)
-            qDebug() << "geo" << r;
     }
     else
     {

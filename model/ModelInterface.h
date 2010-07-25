@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QAbstractItemDelegate>
 
-class ModelInterface : public QObject
+#include "core/model/ModelObserver.h"
+
+class ModelInterface : public ModelSubject
 {
     Q_OBJECT
 public:

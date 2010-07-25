@@ -1,6 +1,6 @@
 #include "ModelInterface.h"
 
-ModelInterface::ModelInterface(QObject *parent) : QObject(parent)
+ModelInterface::ModelInterface(QObject *parent) : ModelSubject(parent)
 {
 
 }

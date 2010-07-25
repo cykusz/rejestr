@@ -1,7 +1,9 @@
 #ifndef ABSTRACTMODEL_H
 #define ABSTRACTMODEL_H
 
-#include <model/ModelInterface.h>
+#include "model/ModelInterface.h"
+#include <QObject>
+
 
 class AbstractModel : public ModelInterface
 {

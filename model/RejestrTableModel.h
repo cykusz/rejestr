@@ -3,10 +3,12 @@
 
 #include <QAbstractTableModel>
 
-#include "policestation/PoliceStationModel.h"
+//#include "policestation/PoliceStationModel.h"
 #include "model/ModelInterface.h"
 
-class RejestrTableModel : public QAbstractTableModel
+#include "core/model/ModelObserver.h"
+
+class RejestrTableModel : public QAbstractTableModel, public ModelObserver
 {
     Q_OBJECT
 public:
@@ -23,6 +25,10 @@ public:
 
     bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex());
 
+    void modelRowsInsertBegan(int posStart, int posEnd);
+    void modelRowsInsertFinished();
+    void modelRowsDeleteBegan(int posStart, int posEnd);
+    void modelRowsDeleteFinished();
 
     ~RejestrTableModel();
 

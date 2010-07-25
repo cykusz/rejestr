@@ -33,7 +33,7 @@ StaffModel::~StaffModel()
 StaffModel::StaffModel(QObject *parent) :
     AbstractModel(parent)
 {
-    m_cache_size = 7;
+    m_cache_size = 8;
     load_cache();
 }
 
@@ -47,6 +47,7 @@ void StaffModel::load_cache()
     m_addRow[4] = QVariant(false);
     m_addRow[5] = QVariant(false);
     m_addRow[6] = QVariant(false);
+    m_addRow[7] = QVariant(false);
 
     QSqlQuery query( SqlConnectionController::qSqlDb() );
 
@@ -85,6 +86,9 @@ bool StaffModel::editData(int i, int j, QVariant newValue)
         case 6:
             pole = QString("w");
             break;
+        case 7:
+            pole = QString("r");
+            break;
         default:
             return false;
         }
@@ -107,7 +111,8 @@ bool StaffModel::editData(int i, int j, QVariant newValue)
                 && m_addRow[3].isValid()
                 && m_addRow[4].isValid()
                 && m_addRow[5].isValid()
-                && m_addRow[6].isValid())
+                && m_addRow[6].isValid()
+                && m_addRow[7].isValid() )
             {
                 QString imie = m_addRow[1].toString();
                 QString nazwisko = m_addRow[2].toString();
@@ -115,11 +120,14 @@ bool StaffModel::editData(int i, int j, QVariant newValue)
                 QString k = m_addRow[4].toString();
                 QString uk = m_addRow[5].toString();
                 QString w = m_addRow[6].toString();
+                QString r = m_addRow[7].toString();
 
                 QSqlQuery query( SqlConnectionController::qSqlDb() );
 
-                query.exec("INSERT INTO pracownicy VALUES('"+imie+"','"+nazwisko+"','"+inicjaly+"','"+k+"','"+uk+"','"+w+"')");
+                query.exec("INSERT INTO pracownicy VALUES('"+imie+"','"+nazwisko+"','"+inicjaly+"','"+k+"','"+uk+"','"+w+"','"+r+"')");
                 QVariant insertId = query.lastInsertId();
+
+                rowsInsertBeganNotify(m_cache[0].size(),m_cache[0].size());
 
                 m_cache[0].append(insertId);
                 m_cache[1].append(m_addRow[1]);
@@ -128,6 +136,7 @@ bool StaffModel::editData(int i, int j, QVariant newValue)
                 m_cache[4].append(m_addRow[4]);
                 m_cache[5].append(m_addRow[5]);
                 m_cache[6].append(m_addRow[6]);
+                m_cache[7].append(m_addRow[7]);
 
                 m_addRow[1] = QVariant();
                 m_addRow[2] = QVariant();
@@ -135,6 +144,9 @@ bool StaffModel::editData(int i, int j, QVariant newValue)
                 m_addRow[4] = QVariant(false);
                 m_addRow[5] = QVariant(false);
                 m_addRow[6] = QVariant(false);
+                m_addRow[7] = QVariant(false);
+
+                rowsInsertFinishedNotify();
 
                 return true;
             }
@@ -152,10 +164,14 @@ void StaffModel::removeRow(int i)
 
     query.exec("DELETE FROM pracownicy WHERE rowid = " + rowid );
 
+    rowsDeleteBeganNotify(i,i);
+
     for ( int j = 0; j < m_cache_size; ++j )
     {
         m_cache[j].remove(i);
     }
+
+    rowsDeleteFinishedNotify();
 }
 
 QVariant StaffModel::headerAt(int i) const
@@ -176,6 +192,8 @@ QVariant StaffModel::headerAt(int i) const
         return QString("uk");
     case 6:
         return QString("w");
+    case 7:
+        return QString("r");
     default:
         return QVariant();
     }

@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     policestation/PoliceStationModel.cpp \
     model/AbstractModel.cpp \
     staff/StaffModel.cpp \
-    staff/StaffItemDelegate.cpp
+    staff/StaffItemDelegate.cpp \
+    core/model/ModelObserver.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
@@ -35,7 +36,8 @@ HEADERS  += MainWindow.h \
     policestation/PoliceStationModel.h \
     model/AbstractModel.h \
     staff/StaffModel.h \
-    staff/StaffItemDelegate.h
+    staff/StaffItemDelegate.h \
+    core/model/ModelObserver.h
 
 FORMS    += MainWindow.ui
 

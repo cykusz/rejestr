@@ -17,7 +17,6 @@ RejestrTableView::RejestrTableView(QWidget *parent) :
 
 RejestrTableView::~RejestrTableView()
 {
-    qDebug() << "delete table view";
 }
 
 void RejestrTableView::keyPressEvent(QKeyEvent *event)
