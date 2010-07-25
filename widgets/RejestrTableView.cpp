@@ -12,6 +12,7 @@ RejestrTableView::RejestrTableView(QWidget *parent) :
     horizontalHeader()->setResizeMode(QHeaderView::Interactive);
     horizontalHeader()->setCascadingSectionResizes(true);
     horizontalHeader()->setMovable(true);
+
 }
 
 RejestrTableView::~RejestrTableView()

@@ -89,7 +89,7 @@ bool RejestrTableModel::setData(const QModelIndex &index, const QVariant &value,
 
 bool RejestrTableModel::removeRows(int position, int rows, const QModelIndex &index)
 {
-    if ( rows == 1 )
+    if ( ( rows == 1 ) && ( position != m_model->row_count() ) )
     {
         beginRemoveRows(QModelIndex(), position, position);
         m_model->removeRow(position);

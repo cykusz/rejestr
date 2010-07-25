@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QStyle>
 #include <QDebug>
+#include <QPainter>
 
 StaffItemDelegate::StaffItemDelegate(QObject *parent) :
     QItemDelegate(parent)
@@ -14,9 +15,14 @@ StaffItemDelegate::StaffItemDelegate(QObject *parent) :
 
 void StaffItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
     if (index.column() > 3)
     {
+        painter->save();
+
+        painter->setClipRect(option.rect);
+        if (option.state & QStyle::State_Selected)
+            painter->fillRect(option.rect, option.palette.highlight());
+
         QStyleOptionButton checkboxstyle;
         QRect checkbox_rect = QApplication::style()->subElementRect(QStyle::SE_CheckBoxIndicator, &checkboxstyle);
         checkboxstyle.rect = option.rect;
@@ -31,12 +37,17 @@ void StaffItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         {
             checkboxstyle.state = QStyle::State_Off | QStyle::State_Enabled;
         }
+        if (option.state & QStyle::State_Selected)
+            painter->fillRect(option.rect, option.palette.highlight());
         QApplication::style()->drawControl(QStyle::CE_CheckBox,
                                             &checkboxstyle, painter);
+
+        painter->restore();
     } else
     {
         QItemDelegate::paint(painter,option,index);
     }
+
 }
 
 QWidget *StaffItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &/*option*/, const QModelIndex &index) const
@@ -97,12 +108,13 @@ void StaffItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOption
     {
         QStyleOptionButton checkboxstyle;
         QRect checkbox_rect = QApplication::style()->subElementRect(QStyle::SE_CheckBoxIndicator, &checkboxstyle);
-        QRect r = option.rect;
+        QRect r( option.rect );
 
         r.setLeft(r.x() +
                   r.width()/2 - checkbox_rect.width()/2);
         editor->setGeometry(r);
-
+        if (index.column()==4 && index.row()==0)
+            qDebug() << "geo" << r;
     }
     else
     {
