@@ -9,6 +9,7 @@
 #include "policestation/PoliceStationItemDelegate.h"
 #include "staff/StaffModel.h"
 #include "widgets/RejestrTableView.h"
+#include "widgets/ScrollTableWidget.h"
 
 MainWindow::MainWindow( QWidget *parent )
     : QMainWindow( parent )
@@ -95,6 +96,8 @@ MainWindow::on_actionConnect_to_a_database_triggered()
 void MainWindow::showTableView(ModelInterface *model)
 {
     RejestrTableView* tv = new RejestrTableView();
+
+    //tv->setEditTriggers(QAbstractItemView::CurrentChanged);
 
     model->setParent(tv);
 

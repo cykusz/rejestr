@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     model/AbstractModel.cpp \
     staff/StaffModel.cpp \
     staff/StaffItemDelegate.cpp \
-    core/model/ModelObserver.cpp
+    core/model/ModelObserver.cpp \
+    widgets/ScrollTableWidget.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
@@ -37,9 +38,11 @@ HEADERS  += MainWindow.h \
     model/AbstractModel.h \
     staff/StaffModel.h \
     staff/StaffItemDelegate.h \
-    core/model/ModelObserver.h
+    core/model/ModelObserver.h \
+    widgets/ScrollTableWidget.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    widgets/ScrollTableWidget.ui
 
 RESOURCES += \
     resources.qrc

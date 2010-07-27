@@ -41,7 +41,7 @@ private:
     void attach( ModelObserver* );
     void detach( ModelObserver* );
 
-    QSet<ModelObserver*> m_observers;
+    QSet< ModelObserver* > m_observers;
 
 public:
     explicit ModelSubject( QObject* parent = 0 );

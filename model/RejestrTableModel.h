@@ -35,10 +35,6 @@ public:
 private:
     ModelInterface* m_model;
 
-signals:
-
-public slots:
-
 };
 
 #endif // REJESTRTABLEMODEL_H

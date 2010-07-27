@@ -73,7 +73,6 @@ Qt::ItemFlags RejestrTableModel::flags(const QModelIndex &index) const
 
 bool RejestrTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-
     if (index.isValid() && role == Qt::EditRole)
     {
         m_model->editData(index.row(), index.column(), value);
@@ -112,5 +111,5 @@ void RejestrTableModel::modelRowsDeleteBegan(int posStart, int posEnd)
 
 void RejestrTableModel::modelRowsDeleteFinished()
 {
-     endRemoveRows();
+    endRemoveRows();
 }

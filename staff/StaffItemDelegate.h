@@ -20,6 +20,7 @@ public:
 
     void updateEditorGeometry(QWidget *editor,
                               const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    bool editorEvent ( QEvent * event, QAbstractItemModel * model, const QStyleOptionViewItem & option, const QModelIndex & index ) ;
 };
 
 #endif // STAFFITEMDELEGATE_H

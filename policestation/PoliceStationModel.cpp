@@ -104,6 +104,8 @@ bool PoliceStationModel::editData(int i, int j, QVariant newValue)
 
                 query.exec("INSERT INTO jednostki VALUES('"+miasto+"','"+jednostka+"')");
 
+
+
                 QVariant insertId = query.lastInsertId();
 
                 rowsInsertBeganNotify(m_cache[0].size(),m_cache[0].size());

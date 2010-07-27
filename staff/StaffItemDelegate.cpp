@@ -7,6 +7,7 @@
 #include <QStyle>
 #include <QDebug>
 #include <QPainter>
+#include <QMouseEvent>
 
 StaffItemDelegate::StaffItemDelegate(QObject *parent) :
     QItemDelegate(parent)
@@ -62,6 +63,7 @@ QWidget *StaffItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 
     } else {
         editor = new QLineEdit(parent);
+        editor->setFocusPolicy(Qt::StrongFocus);
         static_cast<QLineEdit*>(editor)->setFrame(false);
     }
 
@@ -122,4 +124,17 @@ void StaffItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOption
         editor->setGeometry(option.rect);
     }
 
+}
+
+bool StaffItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (index.column() > 3)
+    {
+        if (static_cast<QMouseEvent*>(event)->type()==QMouseEvent::MouseButtonDblClick)
+        {
+            model->setData(index,model->data(index)=="0"?"1":"0");
+        }
+    }
+
+    QAbstractItemDelegate::editorEvent(event,model,option,index);
 }
