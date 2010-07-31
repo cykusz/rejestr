@@ -7,11 +7,17 @@
 #include "staff/StaffItemDelegate.h"
 
 StaffModel* StaffModel::m_instance = 0;
+StaffListModel* StaffListModel::m_instance = 0;
 
 namespace The {
     StaffModel* staff()
     {
         return StaffModel::instance();
+    }
+
+    StaffListModel* staffList()
+    {
+        return StaffListModel::instance();
     }
 }
 
@@ -23,18 +29,17 @@ StaffModel* StaffModel::instance()
     return m_instance;
 }
 
+StaffModel::StaffModel(QObject *parent) :
+    AbstractModel(parent)
+{
+    m_cache_size = 8;
+}
+
 StaffModel::~StaffModel()
 {
     clear_cache();
 
     m_instance = 0;
-}
-
-StaffModel::StaffModel(QObject *parent) :
-    AbstractModel(parent)
-{
-    m_cache_size = 8;
-    load_cache();
 }
 
 void StaffModel::load_cache()
@@ -209,3 +214,36 @@ QAbstractItemDelegate* StaffModel::itemDelegate(QObject* parent) const
 {
     return new StaffItemDelegate( parent );
 }
+//**************
+//StaffListModel
+//**************
+
+StaffListModel* StaffListModel::instance()
+{
+    if (m_instance == 0)
+        m_instance = new StaffListModel();
+
+    return m_instance;
+}
+
+StaffListModel::StaffListModel(QObject *parent) :
+    AbstractListModel(parent)
+{
+}
+
+void StaffListModel::initModel()
+{
+    m_cache.clear();
+    m_cache.resize(2);
+
+    QSqlQuery query( SqlConnectionController::qSqlDb() );
+    query.exec( "SELECT rowid, imie, nazwisko FROM pracownicy ORDER BY rowid" );
+
+    while ( query.next() )
+    {
+        m_cache[0].append(query.value(0).toInt());
+        m_cache[1].append(query.value(1).toString() + " " + query.value(2).toString());
+    }
+}
+
+

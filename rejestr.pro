@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     staff/StaffModel.cpp \
     staff/StaffItemDelegate.cpp \
     core/model/ModelObserver.cpp \
-    widgets/ScrollTableWidget.cpp
+    widgets/ScrollTableWidget.cpp \
+    casein/CaseInModel.cpp \
+    model/AbstractListModel.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
@@ -39,7 +41,9 @@ HEADERS  += MainWindow.h \
     staff/StaffModel.h \
     staff/StaffItemDelegate.h \
     core/model/ModelObserver.h \
-    widgets/ScrollTableWidget.h
+    widgets/ScrollTableWidget.h \
+    casein/CaseInModel.h \
+    model/AbstractListModel.h
 
 FORMS    += MainWindow.ui \
     widgets/ScrollTableWidget.ui

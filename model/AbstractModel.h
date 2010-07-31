@@ -4,6 +4,11 @@
 #include "model/ModelInterface.h"
 #include <QObject>
 
+enum ModelType
+{
+    DefaultModelType,
+    ListModelType
+};
 
 class AbstractModel : public ModelInterface
 {
@@ -19,7 +24,7 @@ public:
 
     virtual bool isColumnEditable(int i) const;
 
-    virtual QVariant valueAt( int i, int j ) const;
+    virtual QVariant valueAt( int i, int j, int role = Qt::DisplayRole ) const;
     virtual QVariant headerAt(int i) const;
 
     virtual QStringList* uniqueList(int i) const;

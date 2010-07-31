@@ -25,7 +25,7 @@ public:
 
     virtual QVariant headerAt(int i) const = 0;
 
-    virtual QVariant valueAt( int i, int j ) const = 0;
+    virtual QVariant valueAt( int i, int j, int role = Qt::DisplayRole) const = 0;
 
     virtual QAbstractItemDelegate* itemDelegate(QObject* parent = 0) const = 0;
 };

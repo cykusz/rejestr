@@ -63,7 +63,6 @@ QWidget *StaffItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
 
     } else {
         editor = new QLineEdit(parent);
-        editor->setFocusPolicy(Qt::StrongFocus);
         static_cast<QLineEdit*>(editor)->setFrame(false);
     }
 

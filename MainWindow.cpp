@@ -97,7 +97,7 @@ void MainWindow::showTableView(ModelInterface *model)
 {
     RejestrTableView* tv = new RejestrTableView();
 
-    //tv->setEditTriggers(QAbstractItemView::CurrentChanged);
+    tv->setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked);
 
     model->setParent(tv);
 

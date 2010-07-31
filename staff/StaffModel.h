@@ -8,6 +8,7 @@
 #include "SqlConnectionController.h"
 
 #include "model/AbstractModel.h"
+#include "model/AbstractListModel.h"
 
 class StaffModel : public AbstractModel
 {
@@ -34,8 +35,26 @@ private:
 
 };
 
+class StaffListModel : public AbstractListModel
+{
+    Q_OBJECT
+
+public:
+    explicit StaffListModel(QObject* parent = 0);
+    static StaffListModel* instance();
+
+private:
+    static StaffListModel* m_instance;
+
+    QVector< QVector<QVariant> > m_cache;
+
+    void initModel();
+
+};
+
 namespace The {
     StaffModel* staff();
+    StaffListModel* staffList();
 }
 
 #endif // STAFFMODEL_H

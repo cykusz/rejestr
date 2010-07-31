@@ -7,7 +7,7 @@ AbstractModel::AbstractModel(QObject *parent) :
 {
 }
 
-QVariant AbstractModel::valueAt(int i, int j) const
+QVariant AbstractModel::valueAt(int i, int j, int role) const
 {
     if ( i >= 0 && i < m_cache[0].size() )
     {
@@ -72,5 +72,5 @@ QAbstractItemDelegate* AbstractModel::itemDelegate(QObject* parent) const
 
 bool AbstractModel::isColumnEditable(int i) const
 {
-    return true;
+    return false;
 }

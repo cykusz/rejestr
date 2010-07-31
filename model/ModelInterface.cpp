@@ -2,5 +2,4 @@
 
 ModelInterface::ModelInterface(QObject *parent) : ModelSubject(parent)
 {
-
 }

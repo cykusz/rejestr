@@ -7,11 +7,17 @@
 #include <QStringList>
 
 PoliceStationModel* PoliceStationModel::m_instance = 0;
+PoliceStationListModel* PoliceStationListModel::m_instance = 0;
 
 namespace The {
     PoliceStationModel* policeStation()
     {
         return PoliceStationModel::instance();
+    }
+
+    PoliceStationListModel* policeStationList()
+    {
+        return PoliceStationListModel::instance();
     }
 }
 
@@ -19,7 +25,6 @@ PoliceStationModel::PoliceStationModel(QObject *parent) :
     AbstractModel(parent)
 {
     m_cache_size = 3;
-    load_cache();
 }
 
 PoliceStationModel*
@@ -195,4 +200,36 @@ QStringList* PoliceStationModel::uniqueList(int i) const
 QAbstractItemDelegate* PoliceStationModel::itemDelegate(QObject* parent) const
 {
     return new PoliceStationItemDelegate( m_instance, parent );
+}
+
+//**************
+//PoliceStationListModel
+//**************
+
+PoliceStationListModel* PoliceStationListModel::instance()
+{
+    if (m_instance == 0)
+        m_instance = new PoliceStationListModel();
+
+    return m_instance;
+}
+
+PoliceStationListModel::PoliceStationListModel(QObject *parent) :
+    AbstractListModel(parent)
+{
+}
+
+void PoliceStationListModel::initModel()
+{
+    m_cache.clear();
+    m_cache.resize(2);
+
+    QSqlQuery query( SqlConnectionController::qSqlDb() );
+    query.exec( "SELECT rowid, miasto, jednostka FROM jednostki ORDER BY rowid" );
+
+    while ( query.next() )
+    {
+        m_cache[0].append(query.value(0).toInt());
+        m_cache[1].append(query.value(1).toString() + " " + query.value(2).toString());
+    }
 }
