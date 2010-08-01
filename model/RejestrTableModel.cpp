@@ -19,7 +19,7 @@ int RejestrTableModel::rowCount(const QModelIndex &parent) const
     if ( parent.isValid() ) return 0;
     else
     {
-        return m_model->row_count() + 1;
+        return m_model->row_count();
     }
 }
 
@@ -41,9 +41,9 @@ QVariant RejestrTableModel::data(const QModelIndex &index, int role) const
         && index.column() < columnCount()
         && index.row() >= 0
         && index.row() <= rowCount()
-        && ( role == Qt::DisplayRole || role == Qt::EditRole ) )
+        && ( role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::UserRole ) )
     {
-        return m_model->valueAt( index.row(), index.column() );
+        return m_model->valueAt( index.row(), index.column(), role );
     }
     else
         return QVariant();

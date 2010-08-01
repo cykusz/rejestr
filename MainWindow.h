@@ -28,6 +28,7 @@ private:
     void showTableView(ModelInterface* model);
 
 private slots:
+    void on_actionCase_In_triggered();
     void on_actionStaff_triggered();
     void on_actionStations_triggered();
     void on_actionConnect_to_a_database_triggered();

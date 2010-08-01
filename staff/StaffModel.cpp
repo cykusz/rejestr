@@ -40,6 +40,16 @@ StaffModel::~StaffModel()
     clear_cache();
 
     m_instance = 0;
+
+	if (The::staffList())
+	{
+		delete The::staffList();
+	}
+}
+
+int StaffModel::row_count() const
+{
+    return m_cache[0].size()+1;
 }
 
 void StaffModel::load_cache()
@@ -214,6 +224,20 @@ QAbstractItemDelegate* StaffModel::itemDelegate(QObject* parent) const
 {
     return new StaffItemDelegate( parent );
 }
+
+QString StaffModel::nameSurnameByRowId(QString rowid)
+{
+	QSqlQuery query( SqlConnectionController::qSqlDb() );
+	query.exec( "SELECT imie, nazwisko FROM pracownicy WHERE rowid = " + rowid );
+
+	qDebug() << "SELECT imie, nazwisko FROM pracownicy WHERE rowid = " + rowid;
+
+	if ( query.next() )
+	{
+		return query.value(0).toString() + " " + query.value(1).toString();
+	}
+	else return "";
+}
 //**************
 //StaffListModel
 //**************
@@ -229,6 +253,13 @@ StaffListModel* StaffListModel::instance()
 StaffListModel::StaffListModel(QObject *parent) :
     AbstractListModel(parent)
 {
+	qDebug() << "create staff list";
+    initModel();
+}
+
+StaffListModel::~StaffListModel()
+{
+	m_instance = 0;
 }
 
 void StaffListModel::initModel()

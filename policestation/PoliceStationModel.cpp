@@ -48,6 +48,16 @@ PoliceStationModel::~PoliceStationModel()
     {
         delete item;
     }
+
+	if (The::policeStationList())
+	{
+		delete The::policeStationList();
+	}
+}
+
+int PoliceStationModel::row_count() const
+{
+    return m_cache[0].size()+1;
 }
 
 void PoliceStationModel::load_cache()
@@ -202,6 +212,18 @@ QAbstractItemDelegate* PoliceStationModel::itemDelegate(QObject* parent) const
     return new PoliceStationItemDelegate( m_instance, parent );
 }
 
+QString PoliceStationModel::cityStationByRowId(QString rowid)
+{
+	QSqlQuery query( SqlConnectionController::qSqlDb() );
+	query.exec( "SELECT miasto, jednostka FROM jednostki WHERE rowid = " + rowid );
+
+	if ( query.next() )
+	{
+		return query.value(0).toString() + " " + query.value(1).toString();
+	}
+	else return "";
+}
+
 //**************
 //PoliceStationListModel
 //**************
@@ -217,6 +239,12 @@ PoliceStationListModel* PoliceStationListModel::instance()
 PoliceStationListModel::PoliceStationListModel(QObject *parent) :
     AbstractListModel(parent)
 {
+    initModel();
+}
+
+PoliceStationListModel::~PoliceStationListModel()
+{
+	m_instance = 0;
 }
 
 void PoliceStationListModel::initModel()
@@ -225,7 +253,7 @@ void PoliceStationListModel::initModel()
     m_cache.resize(2);
 
     QSqlQuery query( SqlConnectionController::qSqlDb() );
-    query.exec( "SELECT rowid, miasto, jednostka FROM jednostki ORDER BY rowid" );
+    query.exec( "SELECT rowid, miasto, jednostka FROM jednostki ORDER BY miasto, jednostka" );
 
     while ( query.next() )
     {

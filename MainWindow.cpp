@@ -4,12 +4,19 @@
 #include <QFileDialog>
 #include <QLabel>
 #include <QTableView>
+#include <QCompleter>
+#include <QStringListModel>
+#include <QStringList>
 
 #include "model/RejestrTableModel.h"
 #include "policestation/PoliceStationItemDelegate.h"
 #include "staff/StaffModel.h"
 #include "widgets/RejestrTableView.h"
 #include "widgets/ScrollTableWidget.h"
+
+#include "staff/StaffModel.h"
+#include "policestation/PoliceStationModel.h"
+#include "casein/CaseInModel.h"
 
 MainWindow::MainWindow( QWidget *parent )
     : QMainWindow( parent )
@@ -118,4 +125,9 @@ void MainWindow::on_actionStations_triggered()
 void MainWindow::on_actionStaff_triggered()
 {
     showTableView( The::staff() );
+}
+
+void MainWindow::on_actionCase_In_triggered()
+{
+    showTableView( The::caseIn() );
 }

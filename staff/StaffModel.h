@@ -18,6 +18,8 @@ public:
     static StaffModel* instance();
     ~StaffModel();
 
+    virtual int row_count() const;
+
     bool editData(int i, int j, QVariant newValue);
     void removeRow(int i);
 
@@ -26,6 +28,8 @@ public:
     QAbstractItemDelegate* itemDelegate(QObject* parent = 0) const;
 
     QVariant headerAt(int i) const;
+
+	static QString nameSurnameByRowId(QString rowid);
 
 public slots:
     void load_cache();
@@ -42,11 +46,10 @@ class StaffListModel : public AbstractListModel
 public:
     explicit StaffListModel(QObject* parent = 0);
     static StaffListModel* instance();
+	~StaffListModel();
 
 private:
     static StaffListModel* m_instance;
-
-    QVector< QVector<QVariant> > m_cache;
 
     void initModel();
 

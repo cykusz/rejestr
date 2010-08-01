@@ -17,6 +17,8 @@ public:
     explicit PoliceStationModel(QObject *parent = 0);
     static PoliceStationModel* instance();
 
+    virtual int row_count() const;
+
     bool editData(int i, int j, QVariant newValue);
     void removeRow(int i);
 
@@ -27,6 +29,8 @@ public:
     QAbstractItemDelegate* itemDelegate(QObject* parent = 0) const;
 
     QStringList* uniqueList(int i) const;
+
+	static QString cityStationByRowId(QString rowid);
 
     ~PoliceStationModel();
 
@@ -48,11 +52,10 @@ class PoliceStationListModel : public AbstractListModel
 public:
     explicit PoliceStationListModel(QObject* parent = 0);
     static PoliceStationListModel* instance();
+	~PoliceStationListModel();
 
 private:
     static PoliceStationListModel* m_instance;
-
-    QVector< QVector<QVariant> > m_cache;
 
     void initModel();
 

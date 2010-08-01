@@ -9,6 +9,9 @@
 #include <QPainter>
 #include <QMouseEvent>
 
+#include <QComboBox>
+#include "staff/StaffModel.h"
+
 StaffItemDelegate::StaffItemDelegate(QObject *parent) :
     QItemDelegate(parent)
 {
@@ -60,6 +63,7 @@ QWidget *StaffItemDelegate::createEditor(QWidget *parent, const QStyleOptionView
     if (index.column() > 3)
     {
         editor = new QCheckBox(parent);
+
 
     } else {
         editor = new QLineEdit(parent);
