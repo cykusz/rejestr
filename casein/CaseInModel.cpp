@@ -108,18 +108,38 @@ bool CaseInModel::editData(int i, int j, QVariant newValue)
 	}
 	else if (j == 6)
 	{
-		QString rowid = m_cache[0][i].toString();
-		QSqlQuery query( SqlConnectionController::qSqlDb() );
-		query.exec("UPDATE sprawy_wejscie SET id_przydzial = '" + newValue.toString() + "' WHERE rowid = " + rowid );
-		m_cache[j][i].setValue(QVariant(StaffModel::nameSurnameByRowId(newValue.toString())));
-		return true;
+		if (newValue.toString() != "0")
+		{
+			QString rowid = m_cache[0][i].toString();
+			QSqlQuery query( SqlConnectionController::qSqlDb() );
+			query.exec("UPDATE sprawy_wejscie SET id_przydzial = '" + newValue.toString() + "' WHERE rowid = " + rowid );
+			m_cache[j][i].setValue(QVariant(StaffModel::nameSurnameByRowId(newValue.toString())));
+			return true;
+		}
+
 	} else if (j == 3)
 	{
-		QString rowid = m_cache[0][i].toString();
-		QSqlQuery query( SqlConnectionController::qSqlDb() );
-		query.exec("UPDATE sprawy_wejscie SET id_jednostka = '" + newValue.toString() + "' WHERE rowid = " + rowid );
-		m_cache[j][i].setValue(QVariant(PoliceStationModel::cityStationByRowId(newValue.toString())));
-		return true;
+		if (newValue.toString() != "0")
+		{
+			QString rowid = m_cache[0][i].toString();
+			QSqlQuery query( SqlConnectionController::qSqlDb() );
+			query.exec("UPDATE sprawy_wejscie SET id_jednostka = '" + newValue.toString() + "' WHERE rowid = " + rowid );
+			m_cache[j][i].setValue(QVariant(PoliceStationModel::cityStationByRowId(newValue.toString())));
+			return true;
+		}
+	}
+	else if (j == 7)
+	{
+		QString v = newValue.toString();
+		if ((QStringList() << "k" << "w" << "u" <<"uk" << "r").contains(v) )
+		{
+			QString rowid = m_cache[0][i].toString();
+			QSqlQuery query( SqlConnectionController::qSqlDb() );
+			query.exec("UPDATE sprawy_wejscie SET rodzaj = '" + newValue.toString() + "' WHERE rowid = " + rowid );
+			m_cache[j][i].setValue(newValue);
+			return true;
+		}
+
 	}
 }
 

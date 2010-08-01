@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     widgets/ScrollTableWidget.cpp \
     casein/CaseInModel.cpp \
     model/AbstractListModel.cpp \
-    casein/CaseInItemDelegate.cpp
+    casein/CaseInItemDelegate.cpp \
+    validators/NotEmptyValidator.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
@@ -45,7 +46,8 @@ HEADERS  += MainWindow.h \
     widgets/ScrollTableWidget.h \
     casein/CaseInModel.h \
     model/AbstractListModel.h \
-    casein/CaseInItemDelegate.h
+    casein/CaseInItemDelegate.h \
+    validators/NotEmptyValidator.h
 
 FORMS    += MainWindow.ui \
     widgets/ScrollTableWidget.ui

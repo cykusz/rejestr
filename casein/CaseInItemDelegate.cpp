@@ -3,6 +3,8 @@
 #include "staff/StaffModel.h"
 #include "policestation/PoliceStationModel.h"
 
+#include "validators/NotEmptyValidator.h"
+
 #include <QDebug>
 
 #include <QLineEdit>
@@ -38,6 +40,13 @@ QWidget *CaseInItemDelegate::createEditor(QWidget *parent, const QStyleOptionVie
 		static_cast<QComboBox*>(editor)->setEditable(true);
         static_cast<QComboBox*>(editor)->setFrame(false);
     }
+	else if (index.column()==7)
+	{
+		editor = new QComboBox(parent);
+		static_cast<QComboBox*>(editor)->addItems(QStringList() << "k" << "w" << "u" <<"uk" << "r");
+		static_cast<QComboBox*>(editor)->setEditable(true);
+		static_cast<QComboBox*>(editor)->setFrame(false);
+	}
     else
     {
         editor = new QLineEdit(parent);
@@ -58,10 +67,10 @@ void CaseInItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index
         QDateEdit* dateEdit = static_cast<QDateEdit*>(editor);
 		dateEdit->setDate(date);
     }
-	else if (index.column()==6 || index.column()==3)
+	else if (index.column()==6 || index.column()==3 || index.column()==7)
     {
         QComboBox* comboEdit = static_cast<QComboBox*>(editor);
-        QString value = index.model()->data(index,Qt::DisplayRole).toString();
+		QString value = index.model()->data(index,Qt::EditRole).toString();
         comboEdit->setEditText(value);
 		comboEdit->setCurrentIndex(comboEdit->findText(value));
     }
@@ -95,6 +104,13 @@ void CaseInItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
 
         model->setData(index,value, Qt::EditRole);
     }
+	else if (index.column()==7)
+	{
+		QComboBox* comboEdit = static_cast<QComboBox*>(editor);
+		QString value = comboEdit->itemText(comboEdit->currentIndex());
+
+		model->setData(index,value, Qt::EditRole);
+	}
     else
     {
         QLineEdit* lineEdit = static_cast<QLineEdit*>(editor);
