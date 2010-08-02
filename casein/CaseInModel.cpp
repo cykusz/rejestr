@@ -104,7 +104,22 @@ bool CaseInModel::editData(int i, int j, QVariant newValue)
 		QSqlQuery query( SqlConnectionController::qSqlDb() );
 		query.exec("UPDATE sprawy_wejscie SET " + pole + " = '" + newValue.toString() + "' WHERE rowid = " + rowid );
 		m_cache[j][i].setValue(newValue.toDate().toString("dd.MM.yyyy"));
-
+		return true;
+	}
+	else if (j == 2)
+	{
+		if (newValue.toString() != "")
+		{
+			QString rowid = m_cache[0][i].toString();
+			QSqlQuery query( SqlConnectionController::qSqlDb() );
+			query.exec("SELECT 1 FROM sprawy_wejscie WHERE nr_he = '" + newValue.toString() + "'");
+			if (!query.next())
+			{
+				query.exec("UPDATE sprawy_wejscie SET nr_he = '"+newValue.toString()+"' WHERE rowid = " + rowid);
+				m_cache[j][i].setValue(newValue);
+			}
+			return true;
+		}
 	}
 	else if (j == 6)
 	{
@@ -136,6 +151,32 @@ bool CaseInModel::editData(int i, int j, QVariant newValue)
 			QString rowid = m_cache[0][i].toString();
 			QSqlQuery query( SqlConnectionController::qSqlDb() );
 			query.exec("UPDATE sprawy_wejscie SET rodzaj = '" + newValue.toString() + "' WHERE rowid = " + rowid );
+			m_cache[j][i].setValue(newValue);
+			return true;
+		}
+
+	}
+	else if (j == 4 || j == 5 || j == 9)
+	{
+		QString val = newValue.toString();
+		if (val != "")
+		{
+			QString pole;
+			QString rowid = m_cache[0][i].toString();
+			switch (j)
+			{
+			case 4:
+				pole = "nr_rsd";
+				break;
+			case 5:
+				pole = "opis";
+				break;
+			case 9:
+				pole = "uwagi";
+				break;
+			}
+			QSqlQuery query( SqlConnectionController::qSqlDb() );
+			query.exec("UPDATE sprawy_wejscie SET "+pole+" = '" + newValue.toString() + "' WHERE rowid = " + rowid );
 			m_cache[j][i].setValue(newValue);
 			return true;
 		}
