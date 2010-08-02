@@ -182,11 +182,25 @@ bool CaseInModel::editData(int i, int j, QVariant newValue)
 		}
 
 	}
+	return false;
 }
 
 void CaseInModel::removeRow(int i)
 {
+	QString rowid = m_cache[0][i].toString();
 
+	QSqlQuery query( SqlConnectionController::qSqlDb() );
+
+	query.exec("DELETE FROM sprawy_wejscie WHERE rowid = " + rowid );
+
+	rowsDeleteBeganNotify(i,i);
+
+	for ( int j = 0; j < m_cache_size; ++j )
+	{
+		m_cache[j].remove(i);
+	}
+
+	rowsDeleteFinishedNotify();
 }
 
 bool CaseInModel::isColumnEditable(int i) const
