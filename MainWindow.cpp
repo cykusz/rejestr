@@ -117,6 +117,14 @@ void MainWindow::showTableView(ModelInterface *model)
     setCentralWidget(tv);
 }
 
+void MainWindow::showScrollTableView(AbstractScrollableModel *model)
+{
+	ScrollTableWidget* tv = new ScrollTableWidget( model );
+
+	setCentralWidget(tv);
+}
+
+
 void MainWindow::on_actionStations_triggered()
 {
     showTableView( The::policeStation() );
@@ -129,5 +137,5 @@ void MainWindow::on_actionStaff_triggered()
 
 void MainWindow::on_actionCase_In_triggered()
 {
-    showTableView( The::caseIn() );
+	showScrollTableView( The::caseIn() );
 }

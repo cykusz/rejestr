@@ -1,9 +1,9 @@
 #ifndef CASEINMODEL_H
 #define CASEINMODEL_H
 
-#include "model/AbstractModel.h"
+#include "model/AbstractScrollableModel.h"
 
-class CaseInModel : public AbstractModel
+class CaseInModel : public AbstractScrollableModel
 {
     Q_OBJECT
 public:
@@ -25,6 +25,8 @@ public slots:
 
 private:
     static CaseInModel* m_instance;
+
+	void updatePageCount();
 
     QVector< int > m_stationIds;
     QVector< int > m_staffIds;

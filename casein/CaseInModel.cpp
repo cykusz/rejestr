@@ -6,8 +6,11 @@
 #include "policestation/PoliceStationModel.h"
 
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QDebug>
 #include <QDate>
+
+#include "qmath.h"
 
 CaseInModel* CaseInModel::m_instance = 0;
 
@@ -20,9 +23,11 @@ namespace The
 }
 
 CaseInModel::CaseInModel(QObject *parent) :
-    AbstractModel(parent)
+	AbstractScrollableModel(parent)
 {
     m_cache_size = 10;
+	m_cache.resize( m_cache_size );
+	updatePageCount();
 }
 
 CaseInModel::~CaseInModel()
@@ -38,21 +43,36 @@ CaseInModel* CaseInModel::instance()
     return m_instance;
 }
 
+void CaseInModel::updatePageCount()
+{
+	QSqlQuery query( SqlConnectionController::qSqlDb() );
+
+	query.exec("SELECT COUNT(1) as count FROM sprawy_wejscie");
+	query.next();
+
+	setPageCount( qCeil(query.value(0).toDouble() / (qreal)onPage()) );
+}
+
 void CaseInModel::load_cache()
 {
+	rowsDeleteBeganNotify(0,m_cache[0].size()-1);
+
     m_cache.clear();
-    m_cache.resize( m_cache_size );
+	m_cache.resize( m_cache_size );
+
+	rowsDeleteFinishedNotify();
 
     QSqlQuery query( SqlConnectionController::qSqlDb() );
 
-    query.exec( "SELECT sw.rowid, sw.*, j.miasto, j.jednostka, p.imie, p.nazwisko FROM sprawy_wejscie as sw, jednostki as j, pracownicy as p WHERE sw.id_przydzial = p.rowid AND sw.id_jednostka = j.rowid ORDER BY sw.rowid" );
-
+	query.exec( "SELECT sw.rowid, sw.*, j.miasto, j.jednostka, p.imie, p.nazwisko FROM sprawy_wejscie as sw, jednostki as j, pracownicy as p WHERE sw.id_przydzial = p.rowid AND sw.id_jednostka = j.rowid ORDER BY sw.rowid LIMIT " + QString::number(m_page*m_onPage) + ", " + QString::number(m_onPage) );
+	int c = 0;
     while ( query.next() )
     {
         m_stationIds.append(query.value(3).toInt());
         m_staffIds.append(query.value(6).toInt());
 
         int i = 0;
+		rowsInsertBeganNotify(c,c);
         m_cache[i].append(query.value(i)); i++;
 		m_cache[i].append(query.value(i).toDate().toString("dd.MM.yyyy")); i++;
         m_cache[i].append(query.value(i)); i++;
@@ -63,7 +83,12 @@ void CaseInModel::load_cache()
         m_cache[i].append(query.value(i)); i++;
 		m_cache[i].append(query.value(i).toDate().toString("dd.MM.yyyy")); i++;
         m_cache[i].append(query.value(i)); i++;
+		rowsInsertFinishedNotify();
+		c++;
+
     }
+	/*rowsInsertBeganNotify(i,i);
+	rowsInsertFinishedNotify();*/
 }
 
 QVariant CaseInModel::headerAt(int i) const

@@ -8,6 +8,7 @@
 #include "core/sql/SqlConnectionObserver.h"
 #include "SqlConnectionController.h"
 #include "model/ModelInterface.h"
+#include "model/AbstractScrollableModel.h"
 
 class MainWindow : public QMainWindow, public SqlConnectionObserver
 {
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow ui;
 
     void showTableView(ModelInterface* model);
+	void showScrollTableView(AbstractScrollableModel* model);
 
 private slots:
     void on_actionCase_In_triggered();
