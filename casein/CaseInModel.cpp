@@ -50,6 +50,8 @@ void CaseInModel::updatePageCount()
 	query.exec("SELECT COUNT(1) as count FROM sprawy_wejscie");
 	query.next();
 
+	qDebug() << query.value(0).toDouble() << (qreal)onPage();
+
 	setPageCount( qCeil(query.value(0).toDouble() / (qreal)onPage()) );
 }
 
@@ -244,7 +246,10 @@ void CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QSt
 	query.exec("INSERT INTO sprawy_wejscie VALUES('"+datawej+"','"+he+"','"+jednostka+"','"+rsd+"','"+opis+"','"+przydzial+"','"+rodzaj+"','"+datazab+"','"+uwagi+"')");
 
 	updatePageCount();
+	qDebug() << "go to last page";
 	lastPage(true);
+	qDebug() << "after go";
+
 }
 
 QAbstractItemDelegate* CaseInModel::itemDelegate(QObject *parent) const

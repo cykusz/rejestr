@@ -15,7 +15,7 @@ class PoliceStationModel : public AbstractModel
     Q_OBJECT
 public:
     explicit PoliceStationModel(QObject *parent = 0);
-    static PoliceStationModel* instance();
+	static PoliceStationModel* instance();
 
     virtual int row_count() const;
 
@@ -51,7 +51,7 @@ class PoliceStationListModel : public AbstractListModel
 
 public:
     explicit PoliceStationListModel(QObject* parent = 0);
-    static PoliceStationListModel* instance();
+	static PoliceStationListModel* instance(QObject *parent = 0);
 	~PoliceStationListModel();
 
 private:
@@ -63,7 +63,7 @@ private:
 
 namespace The {
     PoliceStationModel* policeStation();
-    PoliceStationListModel* policeStationList();
+	PoliceStationListModel* policeStationList(QObject *parent = 0);
 }
 
 #endif // POLICESTATIONMODEL_H

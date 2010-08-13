@@ -2,6 +2,7 @@
 #define ABSTRACTSCROLLABLEMODEL_H
 
 #include "model/AbstractModel.h"
+#include <QDebug>
 
 class AbstractScrollableModel : public AbstractModel
 {
@@ -11,14 +12,15 @@ public:
 
 	inline void setOnPage(const int& onp)
 	{
-		if (onp > 0)
+		if (onp > 0 )
 		{
 			m_onPage = onp;
+			int oldpc = m_pageCount;
 			updatePageCount();
 
 			if (m_page >= m_pageCount)
 				setPage(pageCount() - 1);
-			else
+			else if ( oldpc != pageCount() )
 			{
 				load_cache();
 				emit pageChanged();
@@ -74,6 +76,8 @@ public:
 		{
 			m_page = p;
 
+			qDebug() << "set page" << p;
+
 			load_cache();
 		}
 
@@ -85,12 +89,11 @@ protected:
 	{
 		m_pageCount = p;
 
-		if ( m_pageCount >= m_page )
-		{
-			if (m_page >= m_pageCount)
-				setPage(pageCount() - 1);
+		qDebug() << "set page count " << p;
 
-		}
+		if (m_page >= m_pageCount)
+			setPage(pageCount() - 1);
+
 	}
 
 	virtual void updatePageCount() = 0;

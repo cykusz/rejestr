@@ -10,7 +10,7 @@ RejestrTableModel::RejestrTableModel(ModelInterface *model, QObject *parent) :
 
 RejestrTableModel::~RejestrTableModel()
 {
-    qDebug() << "delete table model";
+	//qDebug() << "delete table model";
     //m_model->clear_cache();
 }
 

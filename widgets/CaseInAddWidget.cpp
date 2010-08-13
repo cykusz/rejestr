@@ -4,12 +4,15 @@
 #include "policestation/PoliceStationModel.h"
 #include "casein/CaseInModel.h"
 
+#include <QDebug>
+
 CaseInAddWidget::CaseInAddWidget(QWidget *parent) :
     QWidget(parent){
     ui.setupUi(this);
 
-	ui.comboStaff->setModel( The::staffList() );
-	ui.comboStation->setModel( The::policeStationList() );
+	qDebug() << "set staff combo list";
+	ui.comboStaff->setModel( The::staffList(this) );
+	ui.comboStation->setModel( The::policeStationList(this) );
 }
 
 void CaseInAddWidget::changeEvent(QEvent *e)

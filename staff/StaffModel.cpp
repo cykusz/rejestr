@@ -15,9 +15,10 @@ namespace The {
         return StaffModel::instance();
     }
 
-    StaffListModel* staffList()
+	StaffListModel* staffList(QObject *parent)
     {
-        return StaffListModel::instance();
+		qDebug() << "get staff list model";
+		return StaffListModel::instance(parent);
     }
 }
 
@@ -41,10 +42,10 @@ StaffModel::~StaffModel()
 
     m_instance = 0;
 
-	if (The::staffList())
+	/*if (The::staffList())
 	{
 		delete The::staffList();
-	}
+	}*/
 }
 
 int StaffModel::row_count() const
@@ -242,10 +243,17 @@ QString StaffModel::nameSurnameByRowId(QString rowid)
 //StaffListModel
 //**************
 
-StaffListModel* StaffListModel::instance()
+StaffListModel* StaffListModel::instance(QObject *parent)
 {
     if (m_instance == 0)
-        m_instance = new StaffListModel();
+	{
+		qDebug() << "create new staff list instance";
+		m_instance = new StaffListModel(parent);
+	}
+
+	if (parent != 0)
+		m_instance->setParent(parent);
+
 
     return m_instance;
 }
@@ -259,6 +267,7 @@ StaffListModel::StaffListModel(QObject *parent) :
 
 StaffListModel::~StaffListModel()
 {
+	qDebug() << "delete staff list instance";
 	m_instance = 0;
 }
 

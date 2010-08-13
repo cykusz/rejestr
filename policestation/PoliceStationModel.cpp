@@ -15,9 +15,9 @@ namespace The {
         return PoliceStationModel::instance();
     }
 
-    PoliceStationListModel* policeStationList()
+	PoliceStationListModel* policeStationList(QObject *parent)
     {
-        return PoliceStationListModel::instance();
+		return PoliceStationListModel::instance(parent);
     }
 }
 
@@ -42,17 +42,17 @@ PoliceStationModel::~PoliceStationModel()
 
     clear_cache();
 
-    qDebug() << "delete policeStation";
+	//qDebug() << "delete policeStation";
 
     foreach (QStringList *item, m_uniqueLists)
     {
         delete item;
     }
 
-	if (The::policeStationList())
+	/*if (The::policeStationList())
 	{
 		delete The::policeStationList();
-	}
+	}*/
 }
 
 int PoliceStationModel::row_count() const
@@ -228,10 +228,13 @@ QString PoliceStationModel::cityStationByRowId(QString rowid)
 //PoliceStationListModel
 //**************
 
-PoliceStationListModel* PoliceStationListModel::instance()
+PoliceStationListModel* PoliceStationListModel::instance(QObject *parent)
 {
     if (m_instance == 0)
-        m_instance = new PoliceStationListModel();
+		m_instance = new PoliceStationListModel(parent);
+
+	if (parent != 0)
+		m_instance->setParent(parent);
 
     return m_instance;
 }

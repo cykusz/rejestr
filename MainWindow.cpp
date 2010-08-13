@@ -102,7 +102,9 @@ MainWindow::on_actionConnect_to_a_database_triggered()
 
 void MainWindow::showTableView(ModelInterface *model)
 {
-    RejestrTableView* tv = new RejestrTableView();
+	//setCentralWidget(0);
+
+	RejestrTableView* tv = new RejestrTableView();
 
     tv->setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked);
 
@@ -114,13 +116,17 @@ void MainWindow::showTableView(ModelInterface *model)
 
     tv->setModel( tableModel );
 
-    setCentralWidget(tv);
+	qDebug() << "set central widget";
+	setCentralWidget(tv);
 }
 
 void MainWindow::showScrollTableView(AbstractScrollableModel *model)
 {
-	ScrollTableWidget* tv = new ScrollTableWidget( model );
+	//qDebug() << "set central widget 0";
+	//setCentralWidget(0);
 
+	ScrollTableWidget* tv = new ScrollTableWidget( model );
+	qDebug() << "set central widget";
 	setCentralWidget(tv);
 }
 

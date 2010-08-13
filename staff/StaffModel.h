@@ -45,7 +45,7 @@ class StaffListModel : public AbstractListModel
 
 public:
     explicit StaffListModel(QObject* parent = 0);
-    static StaffListModel* instance();
+	static StaffListModel* instance(QObject *parent = 0);
 	~StaffListModel();
 
 private:
@@ -57,7 +57,7 @@ private:
 
 namespace The {
     StaffModel* staff();
-    StaffListModel* staffList();
+	StaffListModel* staffList(QObject *parent = 0);
 }
 
 #endif // STAFFMODEL_H
