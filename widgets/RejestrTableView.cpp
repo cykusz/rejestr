@@ -12,7 +12,6 @@ RejestrTableView::RejestrTableView(QWidget *parent) :
     horizontalHeader()->setResizeMode(QHeaderView::Interactive);
     horizontalHeader()->setCascadingSectionResizes(true);
     horizontalHeader()->setMovable(true);
-
 }
 
 RejestrTableView::~RejestrTableView()
@@ -28,7 +27,7 @@ void RejestrTableView::keyPressEvent(QKeyEvent *event)
         if ( sr.count() >= 1 )
         {
             QMessageBox msgBox;
-            msgBox.setText("The rows are about to be deleted.");
+			msgBox.setText(QString::number(sr.count()) + " rows are about to be deleted.");
             msgBox.setInformativeText("Do you want to delete these rows?");
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
             msgBox.setDefaultButton(QMessageBox::No);

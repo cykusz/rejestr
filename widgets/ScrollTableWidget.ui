@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>583</width>
-    <height>300</height>
+    <width>674</width>
+    <height>453</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,37 +34,17 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="6">
-    <widget class="RejestrTableView" name="tableView">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
+   <item row="0" column="3">
     <widget class="QPushButton" name="btnNextPage">
      <property name="text">
       <string>&gt;</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
+   <item row="0" column="4">
     <widget class="QPushButton" name="btnLastPage">
      <property name="text">
       <string>&gt;&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="QPushButton" name="btnAddRecord">
-     <property name="text">
-      <string>+</string>
      </property>
     </widget>
    </item>
@@ -81,11 +61,77 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="0" column="2">
+    <widget class="QSpinBox" name="spinPage">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="6">
+    <widget class="RejestrTableView" name="tableView">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="6">
     <widget class="QLabel" name="lblPageInfo">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>page: 0/0</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="6">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Add Case</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="CaseInAddWidget" name="widget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -95,6 +141,12 @@
    <class>RejestrTableView</class>
    <extends>QTableView</extends>
    <header>widgets/RejestrTableView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CaseInAddWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/CaseInAddWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

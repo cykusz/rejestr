@@ -20,6 +20,8 @@ public:
 
     QVariant headerAt(int i) const;
 
+	void insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi);
+
 public slots:
     void load_cache();
 

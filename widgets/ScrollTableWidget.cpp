@@ -38,6 +38,8 @@ void ScrollTableWidget::changeEvent(QEvent *e)
 
 void ScrollTableWidget::onPageChanged()
 {
+	ui.spinPage->setValue(m_tableModel->page()+1);
+	ui.spinPage->setMaximum(m_tableModel->pageCount());
 	ui.lblPageInfo->setText("Page: " + QString::number(m_tableModel->page()+1) + " / " + QString::number(m_tableModel->pageCount()));
 }
 
@@ -69,4 +71,14 @@ void ScrollTableWidget::on_spinOnPage_editingFinished()
 void ScrollTableWidget::on_spinOnPage_valueChanged(int v)
 {
 	m_tableModel->setOnPage(v);
+}
+
+void ScrollTableWidget::on_spinPage_editingFinished()
+{
+	m_tableModel->setPage(ui.spinPage->value()-1);
+}
+
+void ScrollTableWidget::on_spinPage_valueChanged(int )
+{
+	m_tableModel->setPage(ui.spinPage->value()-1);
 }

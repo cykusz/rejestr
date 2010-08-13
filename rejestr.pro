@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     model/AbstractListModel.cpp \
     casein/CaseInItemDelegate.cpp \
     validators/NotEmptyValidator.cpp \
-    model/AbstractScrollableModel.cpp
+    model/AbstractScrollableModel.cpp \
+    widgets/CaseInAddWidget.cpp
 
 HEADERS  += MainWindow.h \
     core/sql/SqlConnectionObserver.h \
@@ -49,10 +50,12 @@ HEADERS  += MainWindow.h \
     model/AbstractListModel.h \
     casein/CaseInItemDelegate.h \
     validators/NotEmptyValidator.h \
-    model/AbstractScrollableModel.h
+    model/AbstractScrollableModel.h \
+    widgets/CaseInAddWidget.h
 
 FORMS    += MainWindow.ui \
-    widgets/ScrollTableWidget.ui
+    widgets/ScrollTableWidget.ui \
+    widgets/CaseInAddWidget.ui
 
 RESOURCES += \
     resources.qrc

@@ -226,12 +226,25 @@ void CaseInModel::removeRow(int i)
 	}
 
 	rowsDeleteFinishedNotify();
+
+	updatePageCount();
+	load_cache();
 }
 
 bool CaseInModel::isColumnEditable(int i) const
 {
     if ( i == 0 ) return false;
     else return true;
+}
+
+void CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi)
+{
+	QSqlQuery query( SqlConnectionController::qSqlDb() );
+
+	query.exec("INSERT INTO sprawy_wejscie VALUES('"+datawej+"','"+he+"','"+jednostka+"','"+rsd+"','"+opis+"','"+przydzial+"','"+rodzaj+"','"+datazab+"','"+uwagi+"')");
+
+	updatePageCount();
+	lastPage(true);
 }
 
 QAbstractItemDelegate* CaseInModel::itemDelegate(QObject *parent) const
