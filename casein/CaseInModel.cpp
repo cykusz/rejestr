@@ -122,6 +122,13 @@ QVariant CaseInModel::headerAt(int i) const
     }
 }
 
+bool CaseInModel::isHeUnique(QString he)
+{
+	QSqlQuery query( SqlConnectionController::qSqlDb() );
+	query.exec("SELECT 1 FROM sprawy_wejscie WHERE nr_he = '" + he + "'");
+	return ! query.next();
+}
+
 bool CaseInModel::editData(int i, int j, QVariant newValue)
 {
 	if (j == 1 || j == 8)
@@ -138,10 +145,10 @@ bool CaseInModel::editData(int i, int j, QVariant newValue)
 		if (newValue.toString() != "")
 		{
 			QString rowid = m_cache[0][i].toString();
-			QSqlQuery query( SqlConnectionController::qSqlDb() );
-			query.exec("SELECT 1 FROM sprawy_wejscie WHERE nr_he = '" + newValue.toString() + "'");
-			if (!query.next())
+
+			if (isHeUnique(newValue.toString()))
 			{
+				QSqlQuery query( SqlConnectionController::qSqlDb() );
 				query.exec("UPDATE sprawy_wejscie SET nr_he = '"+newValue.toString()+"' WHERE rowid = " + rowid);
 				m_cache[j][i].setValue(newValue);
 			}
@@ -243,7 +250,23 @@ void CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QSt
 {
 	QSqlQuery query( SqlConnectionController::qSqlDb() );
 
-	query.exec("INSERT INTO sprawy_wejscie VALUES('"+datawej+"','"+he+"','"+jednostka+"','"+rsd+"','"+opis+"','"+przydzial+"','"+rodzaj+"','"+datazab+"','"+uwagi+"')");
+	if (isHeUnique(he))
+	{
+		if (jednostka != "0")
+		{
+			if (rsd != "")
+			{
+				if (przydzial != "0")
+				{
+					if ((QStringList() << "k" << "w" << "u" <<"uk" << "r").contains(rodzaj) )
+					{
+						query.exec("INSERT INTO sprawy_wejscie VALUES('"+datawej+"','"+he+"','"+jednostka+"','"+rsd+"','"+opis+"','"+przydzial+"','"+rodzaj+"','"+datazab+"','"+uwagi+"')");
+					}
+				}
+			}
+		}
+	}
+
 
 	updatePageCount();
 	qDebug() << "go to last page";

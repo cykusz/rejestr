@@ -22,6 +22,8 @@ public:
 
 	void insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi);
 
+	static bool isHeUnique(QString he);
+
 public slots:
     void load_cache();
 
