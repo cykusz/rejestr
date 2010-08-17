@@ -8,10 +8,9 @@
 #include <QMessageBox>
 
 CaseInAddWidget::CaseInAddWidget(QWidget *parent) :
-    QWidget(parent){
+	QWidget(parent)
+{
     ui.setupUi(this);
-
-	qDebug() << "set staff combo list";
 	ui.comboStaff->setModel( The::staffList(this) );
 	ui.comboStation->setModel( The::policeStationList(this) );
 }

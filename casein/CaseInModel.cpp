@@ -16,32 +16,32 @@ CaseInModel* CaseInModel::m_instance = 0;
 
 namespace The
 {
-    CaseInModel* caseIn()
-    {
-        return CaseInModel::instance();
-    }
+	CaseInModel* caseIn()
+	{
+		return CaseInModel::instance();
+	}
 }
 
 CaseInModel::CaseInModel(QObject *parent) :
 	AbstractScrollableModel(parent)
 	, m_lastError("")
 {
-    m_cache_size = 10;
+	m_cache_size = 10;
 	m_cache.resize( m_cache_size );
 	updatePageCount();
 }
 
 CaseInModel::~CaseInModel()
 {
-    m_instance = 0;
+	m_instance = 0;
 }
 
 CaseInModel* CaseInModel::instance()
 {
-    if ( m_instance == 0 )
-        m_instance = new CaseInModel();
+	if ( m_instance == 0 )
+		m_instance = new CaseInModel();
 
-    return m_instance;
+	return m_instance;
 }
 
 void CaseInModel::updatePageCount()
@@ -60,67 +60,67 @@ void CaseInModel::load_cache()
 {
 	rowsDeleteBeganNotify(0,m_cache[0].size()-1);
 
-    m_cache.clear();
+	m_cache.clear();
 	m_cache.resize( m_cache_size );
 
 	rowsDeleteFinishedNotify();
 
-    QSqlQuery query( SqlConnectionController::qSqlDb() );
+	QSqlQuery query( SqlConnectionController::qSqlDb() );
 
 	query.exec( "SELECT sw.rowid, sw.*, j.miasto, j.jednostka, p.imie, p.nazwisko FROM sprawy_wejscie as sw, jednostki as j, pracownicy as p WHERE sw.id_przydzial = p.rowid AND sw.id_jednostka = j.rowid ORDER BY sw.rowid LIMIT " + QString::number(m_page*m_onPage) + ", " + QString::number(m_onPage) );
 	int c = 0;
-    while ( query.next() )
-    {
-        m_stationIds.append(query.value(3).toInt());
-        m_staffIds.append(query.value(6).toInt());
+	while ( query.next() )
+	{
+		m_stationIds.append(query.value(3).toInt());
+		m_staffIds.append(query.value(6).toInt());
 
-        int i = 0;
+		int i = 0;
 		rowsInsertBeganNotify(c,c);
-        m_cache[i].append(query.value(i)); i++;
+		m_cache[i].append(query.value(i)); i++;
 		m_cache[i].append(query.value(i).toDate().toString("dd.MM.yyyy")); i++;
-        m_cache[i].append(query.value(i)); i++;
-        m_cache[i].append(query.value(10).toString() + " " + query.value(11).toString()); i++;
-        m_cache[i].append(query.value(i)); i++;
-        m_cache[i].append(query.value(i)); i++;
-        m_cache[i].append(query.value(12).toString() + " " + query.value(13).toString()); i++;
-        m_cache[i].append(query.value(i)); i++;
+		m_cache[i].append(query.value(i)); i++;
+		m_cache[i].append(query.value(10).toString() + " " + query.value(11).toString()); i++;
+		m_cache[i].append(query.value(i)); i++;
+		m_cache[i].append(query.value(i)); i++;
+		m_cache[i].append(query.value(12).toString() + " " + query.value(13).toString()); i++;
+		m_cache[i].append(query.value(i)); i++;
 		m_cache[i].append(query.value(i).toDate().toString("dd.MM.yyyy")); i++;
-        m_cache[i].append(query.value(i)); i++;
+		m_cache[i].append(query.value(i)); i++;
 		rowsInsertFinishedNotify();
 		c++;
 
-    }
+	}
 	/*rowsInsertBeganNotify(i,i);
 	rowsInsertFinishedNotify();*/
 }
 
 QVariant CaseInModel::headerAt(int i) const
 {
-    switch ( i )
-    {
-    case 0:
-        return QString("id");
-    case 1:
-        return QString("Data wejscia");
-    case 2:
-        return QString("Nr He");
-    case 3:
-        return QString("Jednostka");
-    case 4:
-        return QString("Nr Rsd");
-    case 5:
-        return QString("Opis");
-    case 6:
-        return QString("Przydzial");
-    case 7:
-        return QString("Rodzaj");
-    case 8:
-        return QString("Data zabezpieczenia");
-    case 9:
-        return QString("Uwagi");
-    default:
-        return QVariant();
-    }
+	switch ( i )
+	{
+	case 0:
+		return QString("id");
+	case 1:
+		return QString("Data wejscia");
+	case 2:
+		return QString("Nr He");
+	case 3:
+		return QString("Jednostka");
+	case 4:
+		return QString("Nr Rsd");
+	case 5:
+		return QString("Opis");
+	case 6:
+		return QString("Przydzial");
+	case 7:
+		return QString("Rodzaj");
+	case 8:
+		return QString("Data zabezpieczenia");
+	case 9:
+		return QString("Uwagi");
+	default:
+		return QVariant();
+	}
 }
 
 bool CaseInModel::isHeUnique(QString he)
@@ -243,8 +243,8 @@ void CaseInModel::removeRow(int i)
 
 bool CaseInModel::isColumnEditable(int i) const
 {
-    if ( i == 0 ) return false;
-    else return true;
+	if ( i == 0 ) return false;
+	else return true;
 }
 
 bool CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi)
@@ -293,5 +293,5 @@ bool CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QSt
 
 QAbstractItemDelegate* CaseInModel::itemDelegate(QObject *parent) const
 {
-    return new CaseInItemDelegate(parent);
+	return new CaseInItemDelegate(parent);
 }

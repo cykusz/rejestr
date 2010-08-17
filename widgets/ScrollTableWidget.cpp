@@ -7,7 +7,7 @@ ScrollTableWidget::ScrollTableWidget(QWidget *parent) :
 	QWidget(parent)
 	, m_tableModel(NULL)
 {
-    ui.setupUi(this);
+	ui.setupUi(this);
 }
 
 void ScrollTableWidget::setScrollableModel(AbstractScrollableModel *model)
@@ -28,28 +28,30 @@ void ScrollTableWidget::setScrollableModel(AbstractScrollableModel *model)
 	connect(m_tableModel, SIGNAL(recordInserted()),ui.tableView, SLOT(scrollToBottom()));
 
 	m_tableModel->setOnPage(ui.spinOnPage->value());
+
+	onPageChanged();
 }
 
 void ScrollTableWidget::changeEvent(QEvent *e)
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui.retranslateUi(this);
-        break;
-    default:
-        break;
-    }
+	QWidget::changeEvent(e);
+	switch (e->type()) {
+	case QEvent::LanguageChange:
+		ui.retranslateUi(this);
+		break;
+	default:
+		break;
+	}
 }
 
 void ScrollTableWidget::onPageChanged()
 {
-	qDebug () << "set spin page value:" << m_tableModel->page()+1 << m_tableModel->page();
-
 	ui.spinPage->setMaximum(m_tableModel->pageCount());
 	ui.spinPage->setValue(m_tableModel->page()+1);
 
 	ui.lblPageInfo->setText("Page: " + QString::number(m_tableModel->page()+1) + " / " + QString::number(m_tableModel->pageCount()));
+
+	updateArrows();
 }
 
 void ScrollTableWidget::on_btnFirstPage_clicked()
@@ -84,12 +86,39 @@ void ScrollTableWidget::on_spinOnPage_valueChanged(int v)
 
 void ScrollTableWidget::on_spinPage_editingFinished()
 {
-	qDebug() << "spinPage" << ui.spinPage->value()-1;
 	m_tableModel->setPage(ui.spinPage->value()-1);
 }
 
 void ScrollTableWidget::on_spinPage_valueChanged(int )
 {
-	qDebug() << "spinPage" << ui.spinPage->value()-1;
 	m_tableModel->setPage(ui.spinPage->value()-1);
+}
+
+void ScrollTableWidget::setLeftArowsEnabled(bool enabled)
+{
+	ui.btnFirstPage->setEnabled(enabled);
+	ui.btnPrevPage->setEnabled(enabled);
+}
+
+void ScrollTableWidget::setRightArowsEnabled(bool enabled)
+{
+	ui.btnLastPage->setEnabled(enabled);
+	ui.btnNextPage->setEnabled(enabled);
+}
+
+void ScrollTableWidget::updateArrows()
+{
+	if ( m_tableModel->page()==0 )
+	{
+		setLeftArowsEnabled( false );
+	}
+	else
+		setLeftArowsEnabled( true );
+
+	if ( m_tableModel->page() == m_tableModel->pageCount()-1 )
+	{
+		setRightArowsEnabled( false );
+	}
+	else
+		setRightArowsEnabled( true );
 }

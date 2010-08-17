@@ -27,7 +27,6 @@ private:
     Ui::MainWindow ui;
 
     void showTableView(ModelInterface* model);
-	void showScrollTableView(AbstractScrollableModel* model);
 
 private slots:
     void on_actionCase_In_triggered();

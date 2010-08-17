@@ -6,19 +6,19 @@
 
 class AbstractListModel : public QAbstractListModel
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit AbstractListModel(QObject *parent = 0);
+	explicit AbstractListModel(QObject *parent = 0);
 
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    virtual int rowCount(const QModelIndex &parent = QModelIndex() ) const;
-    //virtual bool setData(const QModelIndex &index, const QVariant &value, int role);
-    virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+	virtual QVariant data(const QModelIndex &index, int role) const;
+	virtual int rowCount(const QModelIndex &parent = QModelIndex() ) const;
+	//virtual bool setData(const QModelIndex &index, const QVariant &value, int role);
+	virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
 protected:
 
-    QVector< QVector<QVariant> > m_cache;
-    virtual void initModel() = 0;
+	QVector< QVector<QVariant> > m_cache;
+	virtual void initModel() = 0;
 
 };
 

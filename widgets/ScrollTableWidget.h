@@ -20,6 +20,10 @@ protected:
 private:
     Ui::ScrollTableWidget ui;
 
+	void setLeftArowsEnabled(bool enabled);
+	void setRightArowsEnabled(bool enabled);
+
+
 	AbstractScrollableModel* m_tableModel;
 
 private slots:
@@ -33,6 +37,7 @@ private slots:
 	void on_btnFirstPage_clicked();
 
 	void onPageChanged();
+	void updateArrows();
 };
 
 #endif // SCROLLTABLEWIDGET_H
