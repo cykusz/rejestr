@@ -266,6 +266,7 @@ bool CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QSt
 							query.exec("INSERT INTO sprawy_wejscie VALUES('"+datawej+"','"+he+"','"+jednostka+"','"+rsd+"','"+opis+"','"+przydzial+"','"+rodzaj+"','"+datazab+"','"+uwagi+"')");
 							updatePageCount();
 							lastPage(true);
+							emit recordInserted();
 							return true;
 						}
 						else

@@ -3,11 +3,16 @@
 
 #include <QDebug>
 
-ScrollTableWidget::ScrollTableWidget(AbstractScrollableModel * model, QWidget *parent) :
+ScrollTableWidget::ScrollTableWidget(QWidget *parent) :
 	QWidget(parent)
-	,m_tableModel(model)
+	, m_tableModel(NULL)
 {
     ui.setupUi(this);
+}
+
+void ScrollTableWidget::setScrollableModel(AbstractScrollableModel *model)
+{
+	m_tableModel = model;
 
 	ui.tableView->setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked);
 
@@ -20,6 +25,7 @@ ScrollTableWidget::ScrollTableWidget(AbstractScrollableModel * model, QWidget *p
 	ui.tableView->setModel( tableModel );
 
 	connect(m_tableModel, SIGNAL(pageChanged()),this,SLOT(onPageChanged()));
+	connect(m_tableModel, SIGNAL(recordInserted()),ui.tableView, SLOT(scrollToBottom()));
 
 	m_tableModel->setOnPage(ui.spinOnPage->value());
 }

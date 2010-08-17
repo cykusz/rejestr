@@ -12,7 +12,7 @@
 #include "policestation/PoliceStationItemDelegate.h"
 #include "staff/StaffModel.h"
 #include "widgets/RejestrTableView.h"
-#include "widgets/ScrollTableWidget.h"
+#include "widgets/CaseInWidget.h"
 
 #include "staff/StaffModel.h"
 #include "policestation/PoliceStationModel.h"
@@ -125,9 +125,9 @@ void MainWindow::showScrollTableView(AbstractScrollableModel *model)
 	//qDebug() << "set central widget 0";
 	//setCentralWidget(0);
 
-	ScrollTableWidget* tv = new ScrollTableWidget( model );
+
 	qDebug() << "set central widget";
-	setCentralWidget(tv);
+
 }
 
 
@@ -143,5 +143,5 @@ void MainWindow::on_actionStaff_triggered()
 
 void MainWindow::on_actionCase_In_triggered()
 {
-	showScrollTableView( The::caseIn() );
+	setCentralWidget( new CaseInWidget( The::caseIn() ) );
 }

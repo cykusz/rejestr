@@ -46,11 +46,11 @@ void CaseInAddWidget::on_btnAdd_clicked()
 	QString datazab = ui.dateProtect->date().toString("yyyy-MM-dd");
 	QString uwagi = ui.edNotice->text();
 
-	if ( ! The::caseIn()->insertCase(datawej, he, jednostka, rsd, opis, przydzial, rodzaj, datazab, uwagi))
+	if ( ! m_tableModel->insertCase(datawej, he, jednostka, rsd, opis, przydzial, rodzaj, datazab, uwagi))
 	{
 		QMessageBox msgBox;
 		msgBox.setIcon(QMessageBox::Critical);
-		msgBox.setText( The::caseIn()->lastError() );
+		msgBox.setText( m_tableModel->lastError() );
 		msgBox.exec();
 	}
 }

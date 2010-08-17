@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CaseInWidget</class>
+ <widget class="QWidget" name="CaseInWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="ScrollTableWidget" name="scrollWidget" native="true"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="CaseInAddWidget" name="addCaseWidget" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CaseInAddWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/CaseInAddWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScrollTableWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/ScrollTableWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

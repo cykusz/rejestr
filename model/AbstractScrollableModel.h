@@ -104,6 +104,7 @@ protected:
 
 signals:
 	void pageChanged();
+	void recordInserted();
 
 };
 
