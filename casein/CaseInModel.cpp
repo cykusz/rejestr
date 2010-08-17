@@ -24,6 +24,7 @@ namespace The
 
 CaseInModel::CaseInModel(QObject *parent) :
 	AbstractScrollableModel(parent)
+	, m_lastError("")
 {
     m_cache_size = 10;
 	m_cache.resize( m_cache_size );
@@ -246,33 +247,47 @@ bool CaseInModel::isColumnEditable(int i) const
     else return true;
 }
 
-void CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi)
+bool CaseInModel::insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi)
 {
 	QSqlQuery query( SqlConnectionController::qSqlDb() );
 
-	if (isHeUnique(he))
+	if (he != "")
 	{
-		if (jednostka != "0")
+		if (isHeUnique(he))
 		{
-			if (rsd != "")
+			if (jednostka != "0")
 			{
-				if (przydzial != "0")
+				if (rsd != "")
 				{
-					if ((QStringList() << "k" << "w" << "u" <<"uk" << "r").contains(rodzaj) )
+					if (przydzial != "0")
 					{
-						query.exec("INSERT INTO sprawy_wejscie VALUES('"+datawej+"','"+he+"','"+jednostka+"','"+rsd+"','"+opis+"','"+przydzial+"','"+rodzaj+"','"+datazab+"','"+uwagi+"')");
+						if ((QStringList() << "k" << "w" << "u" <<"uk" << "r").contains(rodzaj) )
+						{
+							query.exec("INSERT INTO sprawy_wejscie VALUES('"+datawej+"','"+he+"','"+jednostka+"','"+rsd+"','"+opis+"','"+przydzial+"','"+rodzaj+"','"+datazab+"','"+uwagi+"')");
+							updatePageCount();
+							lastPage(true);
+							return true;
+						}
+						else
+							m_lastError = "Wrong rodzaj";
 					}
+					else
+						m_lastError = "Przydzial must be selected";
 				}
+				else
+					m_lastError = "Rsd nr cannot be empty";
 			}
+			else
+				m_lastError = "Jednostka must be selected";
 		}
+		else
+			m_lastError = "Nr He must be unique";
 	}
+	else
+		m_lastError = "Nr he cannot be empty";
 
 
-	updatePageCount();
-	qDebug() << "go to last page";
-	lastPage(true);
-	qDebug() << "after go";
-
+	return false;
 }
 
 QAbstractItemDelegate* CaseInModel::itemDelegate(QObject *parent) const

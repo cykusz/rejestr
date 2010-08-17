@@ -20,9 +20,14 @@ public:
 
     QVariant headerAt(int i) const;
 
-	void insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi);
+	bool insertCase(QString datawej, QString he, QString jednostka, QString rsd, QString opis, QString przydzial, QString rodzaj, QString datazab, QString uwagi);
 
 	static bool isHeUnique(QString he);
+
+	inline const QString& lastError() const
+	{
+		return m_lastError;
+	}
 
 public slots:
     void load_cache();
@@ -34,6 +39,8 @@ private:
 
     QVector< int > m_stationIds;
     QVector< int > m_staffIds;
+
+	QString m_lastError;
 
 };
 

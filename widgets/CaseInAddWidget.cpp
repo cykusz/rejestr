@@ -5,6 +5,7 @@
 #include "casein/CaseInModel.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 CaseInAddWidget::CaseInAddWidget(QWidget *parent) :
     QWidget(parent){
@@ -45,5 +46,11 @@ void CaseInAddWidget::on_btnAdd_clicked()
 	QString datazab = ui.dateProtect->date().toString("yyyy-MM-dd");
 	QString uwagi = ui.edNotice->text();
 
-	The::caseIn()->insertCase(datawej, he, jednostka, rsd, opis, przydzial, rodzaj, datazab, uwagi);
+	if ( ! The::caseIn()->insertCase(datawej, he, jednostka, rsd, opis, przydzial, rodzaj, datazab, uwagi))
+	{
+		QMessageBox msgBox;
+		msgBox.setIcon(QMessageBox::Critical);
+		msgBox.setText( The::caseIn()->lastError() );
+		msgBox.exec();
+	}
 }
