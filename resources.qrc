@@ -1,10 +1,1 @@
-<RCC>
-    <qresource prefix="/icons">
-        <file>connect_ico.png</file>
-        <file>disconnect_ico.png</file>
-        <file>Hangar-32.png</file>
-        <file>staff_ico.png</file>
-        <file>case_in_ico.png</file>
-        <file>case_out_ico.png</file>
-    </qresource>
-</RCC>
+<RCC/>
