@@ -7,10 +7,8 @@
 
 int main(int argc, char *argv[])
 {
-    //qDebug() << QStyleFactory::keys();
-    //QApplication::setStyle("Plastique");
     QApplication a(argc, argv);
-    MainWindow w;//ss
+    MainWindow w;
     w.show();
-    return a.exec();//test
+    return a.exec();
 }
